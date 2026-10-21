@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16364a">
+<title>Function Lab · Teacher Check-in</title>
+<style>
+:root{--navy:#16364a;--ink:#1b3444;--teal:#157b73;--coral:#db6950;--muted:#617783;--edge:#dce5e6;--bg:#eef2f0;--white:#fff;--green:#e5f3ee}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #72c9b9;outline-offset:3px}[hidden]{display:none!important}
+header{background:var(--navy);color:#fff;padding:23px max(20px,calc((100% - 1180px)/2)) 25px}header h1{font:normal clamp(27px,3vw,40px)/1.15 Georgia,serif;margin:6px 0 7px}header p{max-width:650px;color:#c8d9da;margin:0;font-size:14px}.eyebrow{font-size:10px;letter-spacing:.19em;text-transform:uppercase;font-weight:850;color:#95dccf}main{max-width:1180px;padding:26px 16px 60px;margin:auto}.dashboard{display:grid;grid-template-columns:minmax(300px,460px) minmax(300px,1fr);gap:18px;align-items:start}.surface{background:#fff;border:1px solid var(--edge);border-radius:18px;box-shadow:0 12px 32px rgba(29,52,63,.05);padding:21px;min-width:0}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.section-head h2{margin:0;font-size:19px;letter-spacing:-.025em}.caption{font-size:12px;color:var(--muted);margin:7px 0 12px}.capture{background:#102b36;border-radius:14px;overflow:hidden;position:relative;aspect-ratio:16/10;display:grid;place-items:center;color:#b8d0d2}.capture video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}.capture:after{content:"";position:absolute;width:35%;aspect-ratio:1;border:2px solid #91ded1;box-shadow:0 0 0 900px rgba(4,19,24,.17);border-radius:15px;opacity:0;pointer-events:none}.capture.live:after{opacity:1}.camera-placeholder{padding:20px;text-align:center}.buttonrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.btn{border-radius:11px;padding:11px 15px;font-size:13px;font-weight:800;min-height:42px;border:1px solid #cad8dc;background:white;color:var(--ink)}.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.btn.danger{color:#a43431}.btn:disabled{opacity:.48;cursor:not-allowed}.buttonrow>.btn{flex:1}.status{padding:12px 14px;background:#edf4f3;border-radius:12px;font-size:13px;min-height:46px;color:#265964;margin-top:14px}.status.ok{background:#e4f4e7;color:#185c37}.status.error{background:#fff0eb;color:#943d2e}.separator{display:flex;align-items:center;gap:10px;text-transform:uppercase;letter-spacing:.12em;color:#7c8f95;font-weight:800;font-size:10px;margin:21px 0}.separator:before,.separator:after{content:"";height:1px;background:#dce5e6;flex:1}.upload{border:1.5px dashed #9dbcbf;background:#f6faf9;border-radius:13px;padding:16px;text-align:center;display:block;cursor:pointer;font-size:13px;font-weight:800}.upload input{display:none}.pastearea{min-height:81px;width:100%;resize:vertical;border:1.5px solid #c8d7d9;border-radius:11px;padding:12px;color:var(--ink);font:13px/1.5 ui-monospace,Consolas,monospace}.field-label{display:block;margin:15px 0 7px;font-size:12px;font-weight:850}.grid-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}.metric{border:1px solid #e1e9e9;padding:12px 9px;border-radius:12px;background:#fbfdfc}.metric strong{display:block;font-size:26px;line-height:1;font-variant-numeric:tabular-nums}.metric span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-top:6px;font-weight:750}.empty{padding:24px 13px;border:1px dashed #d2dfe1;border-radius:14px;color:#73858c;text-align:center}.selected-top{display:flex;gap:10px;justify-content:space-between;align-items:start;margin:7px 0}.selected-top h3{font:normal 28px/1.13 Georgia,serif;margin:0;overflow-wrap:anywhere}.score{font-size:40px;line-height:1;font-weight:850;color:#1d6460;white-space:nowrap;font-variant-numeric:tabular-nums}.score small{font-size:17px;color:#76918e}.submeta{color:var(--muted);font-size:11px;line-height:1.5;margin:6px 0 0}.radar{max-width:440px;display:block;margin:auto;width:100%}.radar text{font-family:system-ui,sans-serif;fill:#385769;font-size:12px;font-weight:750}.radar .gridline{fill:none;stroke:#dae8e9;stroke-width:1.5}.radar .axis{stroke:#d0dddf;stroke-width:1.2}.radar .area{fill:#66ada4;fill-opacity:.23;stroke:#16867b;stroke-width:3;stroke-linejoin:round}.radar .vertex{fill:#16867b;stroke:white;stroke-width:2}.skill-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:7px}.skill{padding:11px 12px;background:#f5f8f7;border:1px solid #e0e9e7;border-radius:11px}.skill strong{font-size:13px;display:block}.skill small{color:#65818a;font-size:11px;display:block}.bar{background:#d9e7e5;border-radius:8px;height:5px;margin-top:8px}.bar>span{display:block;height:100%;background:#168478;border-radius:8px;max-width:100%}.topics{font-size:12px;width:100%;border-collapse:collapse;margin:15px 0 0}.topics th,.topics td{padding:8px 7px;text-align:left;border-bottom:1px solid #e7edee}.topics th{color:#637a83;font-size:10px;text-transform:uppercase;letter-spacing:.09em}.topics td:nth-child(2),.topics td:nth-child(3){text-align:center}.tiny{font-size:11px;color:var(--muted);line-height:1.6;margin-top:11px}.tools{display:flex;gap:9px;flex-wrap:wrap}.search{width:100%;max-width:260px;border:1.5px solid #cad9dd;border-radius:10px;padding:9px 11px;font-size:13px;min-height:43px}.wide{margin-top:18px}.tablewrap{overflow:auto;max-height:440px}.roster{width:100%;border-collapse:collapse;white-space:nowrap;font-size:13px}.roster th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#68818a;text-align:left;padding:10px 9px;background:#f5f9f8;position:sticky;top:0}.roster td{padding:11px 9px;border-bottom:1px solid #e5ebeb}.roster tr.selected{background:#edf7f4}.roster .mark{font-size:17px;font-weight:800;color:#185c57}.pill{padding:4px 8px;border-radius:30px;background:#ecf2f2;font-size:11px;color:#547078}.textbtn{border:0;background:none;text-decoration:underline;color:#0b6e71;padding:6px 7px;font-weight:750;font-size:12px}.review-indicator{background:#fff5ec;border:1px solid #f1d6bb;border-radius:12px;padding:13px 14px;margin-top:17px;color:#664220}
+.review-indicator.clean{background:#eff8f3;border-color:#cce4d7;color:#25644f}
+.review-indicator strong{display:block;font-size:13px;margin-bottom:5px}.review-indicator p{font-size:12px;line-height:1.55;margin:0}
+.telemetry-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px}.telemetry-cell{border:1px solid #e1e8e7;border-radius:9px;padding:9px 8px;background:#fbfcfc}.telemetry-cell b{font-size:19px;display:block}.telemetry-cell span{display:block;font-size:10px;color:#69808a}
+.raw-record{font:11px/1.5 ui-monospace,Consolas,monospace;background:#f3f7f6;border:1px solid #dfe8e6;padding:11px;border-radius:9px;white-space:pre-wrap;overflow-wrap:anywhere}
+.hintline{font-size:11px;color:var(--muted);margin:7px 0 0}.foot{padding:20px 0;font-size:12px;color:#617985;max-width:1100px}.live-dot{display:inline-block;width:8px;height:8px;background:#39c69c;border-radius:50%;margin-right:5px}.hidden-input{display:none}
+@media(max-width:800px){.dashboard{grid-template-columns:1fr}.surface{padding:17px}.selected-top h3{font-size:24px}main{padding:15px 11px}.grid-metrics{margin:0 0 13px}header{padding:22px 18px}}@media(max-width:390px){.skill-list{grid-template-columns:1fr}.tools{gap:5px}}
+@media print{header,.scanner,.tools,.roster-panel,.btn,.textbtn,.status,.foot{display:none!important}main{max-width:100%;padding:0}.dashboard{display:block}.dashboard .surface:not(.review-panel){display:none}.review-panel{border:0;box-shadow:none;padding:0}.selected-top{margin:0}.radar{max-width:340px}}
+
+.attempt-chart{padding:15px 12px;margin-top:18px;background:#f7fbf9;border:1px solid #e0ebe7;border-radius:12px}.attempt-chart h3{text-align:center;font:normal 22px/1.2 Georgia,serif;margin:2px}.attempt-chart p{text-align:center;margin:6px 0}.spark{width:100%;max-width:450px;margin:7px auto;display:block}.spark .gridline{stroke:#e0e9e6;fill:none;stroke-width:1}.spark text{fill:#66818a;font:11px system-ui,sans-serif}.spark .trend-path{fill:none;stroke:#178478;stroke-width:3;stroke-linejoin:round}.spark .chart-dot{fill:#178478;stroke:white;stroke-width:2}.spark .best-dot{fill:#b9543a;stroke:white;stroke-width:2}.boss-tag{display:inline-block;font-size:10px;font-weight:850;color:#b54732;background:#fff0eb;border-radius:9px;padding:3px 5px;margin-left:3px;vertical-align:middle}.selected-top .boss-tag{font-size:11px;display:block;text-align:center}
+
+.teacher-grade{display:flex;gap:13px;align-items:center;background:#fbf4ed;border:1px solid #ead9cf;padding:12px 14px;border-radius:12px;margin:13px 0 13px;color:#62353a}
+.teacher-grade-wax{width:70px;height:70px;flex:0 0 70px;border-radius:43% 50% 46% 53%/53% 43% 52% 48%;display:grid;place-items:center;background:radial-gradient(circle at 25% 24%,#db7770,#9b3640 57%,#661f2f 100%);box-shadow:inset 0 0 0 5px #ad5b60,inset 0 0 0 7px #e9b39b,2px 4px 7px rgba(95,36,45,.19);transform:rotate(-7deg)}
+.teacher-grade-wax span{font:700 42px Georgia,serif;color:#f7e3cb;text-shadow:1px 2px #68242a}
+.teacher-grade b{display:block;font:700 17px Georgia,serif}
+.teacher-grade small{display:block;font-size:11px;line-height:1.5;margin-top:4px;color:#806864}
+.inline-grade{display:inline-block;border:1px solid #c0a29c;border-radius:7px;padding:0 4px;color:#8e3940;font-size:11px;background:#f8e9e5;font-weight:900}
+</style>
+<!-- jsQR 1.4.0: locally decodes webcam and uploaded images; no student data sent to a QR service. -->
+<script>
+// If a school network blocks the primary QR reader CDN, try a second pinned provider.
+// All QR image decoding happens locally in this browser; these scripts are libraries only.
+window.FunctionLabScannerSource='loading';
+function functionLabTrySecondDecoder(){
+ if(typeof window.jsQR==='function'){window.FunctionLabScannerSource='jsDelivr';return;}
+ if(window.FunctionLabScannerFallbackRequested)return;
+ window.FunctionLabScannerFallbackRequested=true;
+ var s=document.createElement('script');
+ s.src='https://unpkg.com/jsqr@1.4.0/dist/jsQR.js';
+ s.async=true;
+ s.onload=function(){window.FunctionLabScannerSource=typeof window.jsQR==='function'?'unpkg':'unavailable';};
+ s.onerror=function(){window.FunctionLabScannerSource='unavailable';};
+ document.head.appendChild(s);
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js" defer onload="window.FunctionLabScannerSource='jsDelivr'" onerror="functionLabTrySecondDecoder()"></script>
+</head>
+<body>
+<header><div class="eyebrow">IB Mathematics AA SL · Private teacher station</div><h1>Function Lab / Check-in</h1><p>Hold a student's finished QR code in front of your webcam. Their mark appears here, and their result is recorded automatically on <b>this browser only</b>.</p></header>
+<main>
+<div class="dashboard">
+ <section class="surface scanner" aria-labelledby="scannerTitle">
+ <div class="section-head"><h2 id="scannerTitle">1. Scan student</h2><span class="pill" id="cameraStatus">Camera off</span></div>
+ <div class="capture" id="capture"><div class="camera-placeholder" id="placeholder">Camera preview<br><small>Start the camera when students arrive.</small></div><video id="video" autoplay muted playsinline hidden></video></div>
+ <div class="buttonrow"><button class="btn primary" id="startCamera" type="button">Start webcam</button><button class="btn" id="stopCamera" type="button" disabled>Stop camera</button><button class="btn" id="checkCamera" type="button">Check scanner setup</button></div>
+ <div class="status" id="status" role="status" aria-live="polite">Ready for check-in. No student scores have been revealed yet.</div>
+ <div class="separator">Backup scan options</div>
+ <label class="upload" id="dropzone">Upload / drop a QR screenshot<input id="imageUpload" type="file" accept="image/*" aria-label="Upload a QR image"></label>
+ <label class="field-label" for="rawCode">Paste readable QR text (works with no webcam)</label>
+ <textarea class="pastearea" id="rawCode" spellcheck="false" placeholder="FUNCTION LAB v2&#10;Name: ...&#10;Score: ..." aria-label="Readable QR result text"></textarea>
+ <div class="buttonrow"><button class="btn primary" id="addManual">Record pasted result</button><button class="btn" id="clearInput">Clear</button></div>
+ <p class="hintline">Webcam access needs HTTPS (GitHub Pages qualifies) and camera permission. Camera and photo scanning try the built-in QR detector first, then jsQR from one of two pinned public CDNs. No student image or data is uploaded. On a local file, use localhost or GitHub Pages HTTPS for camera permissions.</p>
+ </section>
+ <section class="surface review-panel" aria-labelledby="reviewTitle">
+ <div class="section-head"><h2 id="reviewTitle">2. Reveal result</h2><button class="btn" id="printSelected" type="button" disabled>Print selected</button></div>
+ <div class="grid-metrics"><div class="metric"><strong id="count">0</strong><span>Checked in</span></div><div class="metric"><strong id="average">—</strong><span>Mean mark</span></div><div class="metric"><strong id="highest">—</strong><span>Highest mark</span></div></div>
+ <div id="selectedPanel"><div class="empty">Scan the first QR code to reveal a student's score and diagnostic skills chart.</div></div>
+ </section>
+</div>
+<section class="surface wide roster-panel" aria-labelledby="rosterTitle">
+ <div class="section-head" style="flex-wrap:wrap"><h2 id="rosterTitle">3. Class results</h2><div class="tools"><input class="search" type="search" id="filter" placeholder="Find a student…" aria-label="Search class records"><button class="btn" id="exportCSV" type="button">Export CSV</button><button class="btn" id="exportJSON" type="button">Backup JSON</button><label class="btn" for="importJSON" style="display:inline-flex;align-items:center">Restore JSON</label><input class="hidden-input" id="importJSON" type="file" accept="application/json,.json"><button class="btn danger" id="clearRoster" type="button">Clear class</button></div></div>
+ <div class="tablewrap"><table class="roster"><thead><tr><th>Name</th><th>Best mark</th><th>Runs</th><th>Answered</th><th>Correct</th><th>Indicators</th><th>Scanned</th><th>Details</th></tr></thead><tbody id="rows"><tr><td colspan="8">No students checked in yet.</td></tr></tbody></table></div>
+ <p class="tiny">The teacher dashboard is not linked from the student quiz. Keep this page on your own device. Records stay in this browser's local storage; export CSV or backup JSON before switching computers or clearing browser data.</p>
+</section>
+<p class="foot">Diagnostic interpretation: the best run samples one logarithm-law question, one function-family question, two translations and two dilations. Boss runs use challenge-level questions throughout. The radar is a snapshot, not a definitive measure of competence. Quiz code is client-generated and is not a cryptographically authenticated grade.</p>
+<canvas id="frame" width="960" height="720" hidden></canvas>
+</main>
+<script>
+'use strict';
+(()=>{
+const $=id=>document.getElementById(id);
+const TOPICS=['Log laws','Function families','Horizontal translation','Vertical translation','Horizontal dilation','Vertical dilation'];
+const CATEGORIES=[{name:'Logarithm laws',label:'Log laws',ids:[0]},{name:'Function families',label:'Functions',ids:[1]},{name:'Translations',label:'Translations',ids:[2,3]},{name:'Dilations',label:'Dilations',ids:[4,5]}];
+const STORAGE='function-lab-teacher-roster-v2';
+const GRADE_STARTS=[0,10,21,33,48,62,77];
+function gradeFromScore(raw){const pct=Math.round(100*Math.max(0,Math.min(15,Number(raw)||0))/15);let grade=1;
+ for(let i=1;i<GRADE_STARTS.length;i++)if(pct>=GRADE_STARTS[i])grade=i+1;return grade;}
+
+let records=[],selection='',stream=null,animation=0,busy=false,lastSeen='',lastSeenAt=0,detector=null;
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function checkCode(s){let z=29;for(const b of new TextEncoder().encode(s))z=(z*31+b)%256;return z.toString(16).toUpperCase().padStart(2,'0');}
+function checksum(s){let h=2166136261;for(const b of new TextEncoder().encode(s)){h^=b;h=Math.imul(h,16777619);}return (h>>>0).toString(16).toUpperCase().padStart(8,'0');}
+function evidenceAnswers(pattern){return Array.from(pattern,(character,i)=>{
+ if(character==='-')return{topic:TOPICS[i],answered:false,correct:false,possible:0,earned:0,level:'Not reached'};
+ const n=Number(character),level=n%3,correct=n>=3,possible=level+1;
+ return{topic:TOPICS[i],answered:true,correct,possible,earned:correct?possible:0,level:['Foundation','Application','Challenge'][level]};
+});}
+function expectedSkills(answers){const groups=[['Log',[0]],['Fun',[1]],['Trans',[2,3]],['Dil',[4,5]]];
+ return groups.map(([label,ids])=>{const q=ids.map(i=>answers[i]);return `${label}${q.reduce((a,b)=>a+b.earned,0)}/${q.reduce((a,b)=>a+b.possible,0)}`;}).join(' ');}
+function reviewExpected(t){const flags=[];
+ if(t.copy+t.paste+t.cut>0)flags.push('Clipboard');if(t.focusLosses>=2)flags.push('Focus');
+ if(t.pausedSeconds>=120)flags.push('Long pause');if(t.reloads>0)flags.push('Reload');if(t.menu>0)flags.push('Menu');
+ return flags.length?flags.join(', '):'None';}
+function parseV3Record(raw){
+ const value=String(raw||'').trim().replace(/\r\n?/g,'\n');
+ if(value.length>1600||!value.startsWith('FUNCTION LAB v3\n'))throw Error('Not a Function Lab v3 submission.');
+ const lines=value.split('\n');if(lines.length!==10&&lines.length!==11)throw Error('Incomplete Function Lab v3 QR.');
+ const tail=lines.pop(),match=tail.match(/^Check: ([0-9A-F]{8})$/);
+ if(!match||checksum(lines.join('\n'))!==match[1])throw Error('QR checksum mismatch. Scan the original code.');
+ const fields={};for(const line of lines.slice(1)){
+  const p=line.indexOf(': ');if(p<1)throw Error('Unreadable QR field.');
+  const key=line.slice(0,p),content=line.slice(p+2);if(key in fields)throw Error('Duplicate QR field.');fields[key]=content;
+ }
+ const expected=['Name','Score','Skills','Runs','Focus','Copy','Review','Q'];
+ if(expected.some(k=>!(k in fields))||Object.keys(fields).length!==expected.length+(fields.Grade?1:0))throw Error('QR fields missing or extra.');
+ const name=fields.Name;if(!name.trim()||name.length>64||/[\x00-\x1f]/.test(name))throw Error('Invalid student name.');
+ const ident=fields.Q.match(/^([0-5-]{6}); ID: ([0-9a-z]{7})$/);if(!ident)throw Error('Invalid question evidence / submission ID.');
+ const pattern=ident[1],id=ident[2];
+ const scoreLine=fields.Score.match(/^(\d+)\/15; Correct: (\d+)\/(\d+); Mode: (Standard|Boss)$/);
+ if(!scoreLine)throw Error('Invalid score/attempt mode.');
+ const scoreClaim=Number(scoreLine[1]),correctClaim=Number(scoreLine[2]),attemptClaim=Number(scoreLine[3]),mode=scoreLine[4].toLowerCase();
+ const answers=evidenceAnswers(pattern),score=answers.reduce((a,b)=>a+b.earned,0),correct=answers.filter(a=>a.correct).length,attempted=answers.filter(a=>a.answered).length;
+ if(score!==scoreClaim||correct!==correctClaim||attempted!==attemptClaim)throw Error('Score does not match its question evidence.');
+ if(mode==='boss'&&answers.some(a=>a.answered&&a.possible!==3))throw Error('Boss run should use challenge questions only.');
+ if(mode==='standard'&&score>15)throw Error('Standard run score exceeds 15.');
+ if(fields.Skills!==expectedSkills(answers))throw Error('Skill summary and question evidence differ.');
+ if(fields.Grade&&!/^([1-7]); TZ: M25\/3$/.test(fields.Grade))throw Error('Unrecognized classroom grade benchmark.');
+ if(fields.Grade&&Number(fields.Grade[0])!==gradeFromScore(score))throw Error('Grade and score disagree.');
+ const runs=fields.Runs.match(/^(\d+); Best: (\d+); First: ([0-5-]{6}); Trend: ([\d,]+)$/);
+ if(!runs)throw Error('Invalid attempt-history data.');
+ const runCount=Number(runs[1]),bestAttempt=Number(runs[2]),firstPattern=runs[3];
+ const trend=runs[4].split(',').map(Number);
+ if(!Number.isSafeInteger(runCount)||runCount<0||runCount>500||bestAttempt<0||bestAttempt>runCount||trend.length!==Math.min(12,Math.max(runCount,1))||trend.some(n=>!Number.isSafeInteger(n)||n<0||n>18))throw Error('Invalid attempt count or trend.');
+ if(runCount===0){if(score!==0||bestAttempt!==0||firstPattern!=='------'||attempted!==0)throw Error('Empty session has unexpected results.');}
+ else{
+  if(!bestAttempt)throw Error('Missing best-attempt index.');
+  if(runCount<=12){
+   if(score!==Math.max(...trend)||trend[bestAttempt-1]!==score)throw Error('Best score and trend disagree.');
+   const firstScore=evidenceAnswers(firstPattern).reduce((n,x)=>n+x.earned,0);
+   if(firstScore!==trend[0])throw Error('First-run evidence differs from trend.');
+  }else if(bestAttempt>runCount-12 && trend[bestAttempt-(runCount-12)-1]!==score)throw Error('Best score disagrees with the recent trend.');
+  if(trend.some(x=>x>score))throw Error('A recent attempt exceeds the claimed personal best.');
+ }
+ const focus=fields.Focus.match(/^(\d+); Pause: (\d+)s; Active: (\d+)s$/),clip=fields.Copy.match(/^(\d+); Paste: (\d+); Cut: (\d+); Menu: (\d+); Reload: (\d+)$/);
+ if(!focus||!clip)throw Error('Invalid telemetry.');
+ const nums=[...focus.slice(1),...clip.slice(1)].map(Number);
+ if(nums.some(n=>!Number.isSafeInteger(n)||n<0||n>10000000))throw Error('Impossible telemetry values.');
+ const telemetry={focusLosses:nums[0],pausedSeconds:nums[1],activeSeconds:nums[2],copy:nums[3],paste:nums[4],cut:nums[5],menu:nums[6],reloads:nums[7]};
+ if(telemetry.activeSeconds>1201)throw Error('Session active time exceeds the 20-minute limit.');
+ const review=reviewExpected(telemetry);if(fields.Review!==review)throw Error('Review indicators and telemetry disagree.');
+ return{version:'FUNCTION LAB v3',id,name,score,mode,pattern,answers,attempted,correct,telemetry,review,
+  runCount,bestAttempt,firstPattern,trend,ibGrade:gradeFromScore(score),gradeSource:fields.Grade?'May 2025 TZ3':'Converted from score',trendOffset:runCount-trend.length,raw:value,scannedAt:new Date().toISOString()};
+}
+function parseV4Record(raw){
+ const value=String(raw||'').trim().replace(/\r\n?/g,'\n');
+ if(value.length>1000||!value.startsWith('FL4\n'))throw Error('Not a Function Lab v4 submission.');
+ const lines=value.split('\n');if(lines.length!==11)throw Error('Incomplete Function Lab v4 QR.');
+ const tail=lines.pop(),match=tail.match(/^Check: ([0-9A-F]{8})$/);
+ if(!match||checksum(lines.join('\n'))!==match[1])throw Error('QR checksum mismatch. Scan the original code.');
+ const fields={};for(const line of lines.slice(1)){const n=line.indexOf(': ');if(n<1)throw Error('Unreadable result field.');
+  const key=line.slice(0,n);if(key in fields)throw Error('Duplicate result field.');fields[key]=line.slice(n+2);}
+ const expected=['Name','Score','Runs','Skills','First','Focus','Copy','Review','ID'];
+ if(expected.some(k=>!(k in fields))||Object.keys(fields).length!==expected.length)throw Error('QR fields missing or extra.');
+ const name=fields.Name;if(!name.trim()||name.length>64||/[\x00-\x1f]/.test(name))throw Error('Invalid student name.');
+ const id=fields.ID;if(!/^[0-9a-z]{7}$/.test(id))throw Error('Invalid submission ID.');
+ const sc=fields.Score.match(/^(\d+)\/15; (Standard|Boss); (\d+)\/(\d+)$/);
+ const qp=fields.First.match(/^([0-5-]{6}); Q: ([0-5-]{6})$/);
+ if(!sc||!qp)throw Error('Invalid score or skill evidence.');
+ const pattern=qp[2],firstPattern=qp[1],mode=sc[2].toLowerCase();
+ const answers=evidenceAnswers(pattern),score=answers.reduce((n,a)=>n+a.earned,0),correct=answers.filter(a=>a.correct).length,attempted=answers.filter(a=>a.answered).length;
+ if(score!==Number(sc[1])||correct!==Number(sc[3])||attempted!==Number(sc[4]))throw Error('Score and question evidence disagree.');
+ if(mode==='boss'&&answers.some(a=>a.answered&&a.possible!==3))throw Error('Boss questions must be challenge level.');
+ if(mode==='standard'&&score>15)throw Error('Standard score exceeds 15.');
+ if(fields.Skills!==expectedSkills(answers).replace('Log','L').replace('Fun','F').replace('Trans','T').replace('Dil','D'))throw Error('Skill breakdown disagrees with question evidence.');
+ const runs=fields.Runs.match(/^(\d+); Best: (\d+); ([\d,]+)$/);
+ if(!runs)throw Error('Invalid attempt-history record.');
+ const runCount=Number(runs[1]),bestAttempt=Number(runs[2]),trend=runs[3].split(',').map(Number);
+ if(!Number.isSafeInteger(runCount)||runCount<0||runCount>500||bestAttempt<0||bestAttempt>runCount||trend.length!==Math.min(12,Math.max(runCount,1))||trend.some(v=>!Number.isSafeInteger(v)||v<0||v>18))throw Error('Invalid run count or trend.');
+ if(runCount===0){if(score||bestAttempt||firstPattern!=='------'||attempted)throw Error('Empty session mismatches.');}
+ else{
+  if(!bestAttempt)throw Error('Missing best-run index.');
+  if(runCount<=12){if(score!==Math.max(...trend)||trend[bestAttempt-1]!==score)throw Error('Best run and trend disagree.');
+   if(evidenceAnswers(firstPattern).reduce((n,a)=>n+a.earned,0)!==trend[0])throw Error('First-run evidence disagrees with trend.');}
+  else if(bestAttempt>runCount-12&&trend[bestAttempt-(runCount-12)-1]!==score)throw Error('Best run disagrees with recent trend.');
+  if(trend.some(n=>n>score))throw Error('Recent run exceeds claimed best.');
+ }
+ const focus=fields.Focus.match(/^(\d+); Pause: (\d+)s; Active: (\d+)s$/);
+ const clip=fields.Copy.match(/^(\d+) Paste: (\d+) Cut: (\d+) Menu: (\d+) Reload: (\d+)$/);
+ if(!focus||!clip)throw Error('Invalid telemetry.');
+ const nums=[...focus.slice(1),...clip.slice(1)].map(Number);
+ if(nums.some(n=>!Number.isSafeInteger(n)||n<0||n>10000000))throw Error('Invalid telemetry count.');
+ const telemetry={focusLosses:nums[0],pausedSeconds:nums[1],activeSeconds:nums[2],copy:nums[3],paste:nums[4],cut:nums[5],menu:nums[6],reloads:nums[7]};
+ if(telemetry.activeSeconds>1201)throw Error('Active time exceeds twenty minutes.');
+ const review=reviewExpected(telemetry);if(fields.Review!==review)throw Error('Review indicators disagree with telemetry.');
+ return{version:'FL4',id,name,score,mode,pattern,answers,attempted,correct,telemetry,review,runCount,bestAttempt,firstPattern,
+  trend,gradeSource:'May 2025 TZ3',ibGrade:gradeFromScore(score),trendOffset:runCount-trend.length,raw:value,scannedAt:new Date().toISOString()};
+}
+function parseRecord(raw){
+ if(String(raw||'').trim().startsWith('FL4\n'))return parseV4Record(raw);
+ if(String(raw||'').trim().startsWith('FUNCTION LAB v3\n'))return parseV3Record(raw);
+ const value=String(raw||'').trim().replace(/\r\n?/g,'\n');
+ if(value.startsWith('FL1|'))return parseLegacyRecord(value);
+ if(value.length>1500||!value.startsWith('FUNCTION LAB v2\n'))throw Error('Unrecognized Function Lab result. Use a completed v2 QR or its fallback text.');
+ const lines=value.split('\n');if(lines.length!==9)throw Error('Incomplete QR text. Check that all result lines were copied.');
+ const tail=lines.pop(),match=tail.match(/^Check: ([0-9A-F]{8})$/);
+ if(!match||checksum(lines.join('\n'))!==match[1])throw Error('QR checksum mismatch. Scan the original QR again.');
+ const fields={};for(const line of lines.slice(1)){
+  const p=line.indexOf(': ');if(p<1)throw Error('Unreadable QR field.');
+  const key=line.slice(0,p),content=line.slice(p+2);if(key in fields)throw Error('Duplicate QR field.');fields[key]=content;
+ }
+ const expected=['Name','Score','Skills','Focus','Copy','Review','Q'];
+ if(expected.some(k=>!(k in fields))||Object.keys(fields).length!==expected.length)throw Error('Missing or extra QR data.');
+ const identity=fields.Q.match(/^([0-5-]{6}); ID: ([0-9a-z]{7})$/);if(!identity)throw Error('Invalid evidence or submission ID.');const pattern=identity[1],id=identity[2],name=fields.Name;
+ if(!/^[0-9a-z]{7}$/.test(id))throw Error('Invalid submission ID.');
+ if(!name.trim()||name.length>64||/[\x00-\x1f]/.test(name))throw Error('Invalid student name.');
+ const both=fields.Score.match(/^(\d+)\/15; Correct: (\d+)\/(\d+)$/),scoreMatch=both&&[both[0],both[1]],correctMatch=both&&[both[0],both[2],both[3]];
+ if(!scoreMatch||!correctMatch)throw Error('Invalid score or completion summary.');
+ if(!/^[0-5-]{6}$/.test(pattern))throw Error('Invalid encoded question levels.');
+ const answers=evidenceAnswers(pattern),score=answers.reduce((sum,x)=>sum+x.earned,0),attempted=answers.filter(x=>x.answered).length,
+  correct=answers.filter(x=>x.correct).length;
+ if(score!==Number(scoreMatch[1])||attempted!==Number(correctMatch[2])||correct!==Number(correctMatch[1]))throw Error('Score is not consistent with question evidence.');
+ if(fields.Skills!==expectedSkills(answers))throw Error('Skill marks are not consistent with question evidence.');
+ const focus=fields.Focus.match(/^(\d+); Pause: (\d+)s; Active: (\d+)s$/),
+  clip=fields.Copy.match(/^(\d+); Paste: (\d+); Cut: (\d+); Menu: (\d+); Reload: (\d+)$/);
+ if(!focus||!clip)throw Error('Invalid telemetry fields.');
+ const nums=[...focus.slice(1),...clip.slice(1)].map(Number);
+ if(nums.some(n=>!Number.isSafeInteger(n)||n<0||n>10000000))throw Error('Impossible telemetry values.');
+ const telemetry={focusLosses:nums[0],pausedSeconds:nums[1],activeSeconds:nums[2],
+  copy:nums[3],paste:nums[4],cut:nums[5],menu:nums[6],reloads:nums[7]};
+ if(telemetry.activeSeconds>1201)throw Error('Active duration exceeds the 20-minute limit.');
+ const review=reviewExpected(telemetry);
+ if(fields.Review!==review)throw Error('Review flags do not match the recorded actions.');
+ return{version:'FUNCTION LAB v2',id,name,score,mode:'standard',pattern,answers,attempted,correct,telemetry,review,runCount:1,bestAttempt:1,trend:[score],trendOffset:0,raw:value,scannedAt:new Date().toISOString()};
+}
+function parseLegacyRecord(raw){
+ const text=String(raw||'').trim();const parts=text.split('|');
+ if(parts.length!==6||parts[0]!=='FL1')throw Error('This is not a Function Lab v1 result. Ask the student for their original QR code.');
+ const [version,id,name,claimed,pattern,checksum]=parts;
+ if(!/^[0-9a-z]{7}$/.test(id))throw Error('Invalid submission ID.');
+ if(!name.trim()||name.length>32||/[\x00-\x1f]/.test(name))throw Error('Invalid student name.');
+ if(!/^(?:[0-9]|1[0-5])$/.test(claimed))throw Error('Invalid score.');
+ if(!/^[0-5-]{6}$/.test(pattern))throw Error('Invalid topic evidence.');
+ if(!/^[0-9A-F]{2}$/.test(checksum)||checkCode(parts.slice(0,5).join('|'))!==checksum)throw Error('Result checksum does not match. Try rescanning or pasting the original code.');
+ const answers=Array.from(pattern,(character,i)=>{
+  if(character==='-')return{topic:TOPICS[i],answered:false,correct:false,possible:0,earned:0,level:'Not reached'};
+  const n=Number(character),level=n%3,correct=n>=3,possible=level+1;
+  return{topic:TOPICS[i],answered:true,correct,possible,earned:correct?possible:0,level:['Foundation','Application','Challenge'][level]};
+ });
+ const score=answers.reduce((sum,x)=>sum+x.earned,0);
+ if(score!==Number(claimed))throw Error('The score does not match the encoded answers.');
+ const attempted=answers.filter(x=>x.answered).length,correct=answers.filter(x=>x.correct).length;
+ // Questions may be interrupted by a 20 minute cutoff, hence not every category is sampled.
+ return{version,id,name,score,mode:'standard',pattern,answers,attempted,correct,runCount:1,bestAttempt:1,trend:[score],trendOffset:0,raw:text,scannedAt:new Date().toISOString(),
+  telemetry:{focusLosses:0,pausedSeconds:0,activeSeconds:0,copy:0,paste:0,cut:0,menu:0,reloads:0},review:'Legacy record (telemetry unavailable)'};
+}
+function safeLoad(){try{const saved=JSON.parse(localStorage.getItem(STORAGE)||'[]');if(Array.isArray(saved))return saved.filter(x=>x&&typeof x.raw==='string').map(x=>{try{return{...parseRecord(x.raw),scannedAt:x.scannedAt||new Date().toISOString()};}catch(e){return null;}}).filter(Boolean);}catch(e){}return[];}
+function persist(){try{localStorage.setItem(STORAGE,JSON.stringify(records));return true;}catch(e){status('Browser storage unavailable. Export CSV now: these records may not persist.',true);return false;}}
+function status(msg,error=false,ok=false){$('status').className='status'+(error?' error':ok?' ok':'');$('status').textContent=msg;}
+function sound(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const c=new C(),o=c.createOscillator(),g=c.createGain();o.frequency.value=784;o.type='sine';g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.045,c.currentTime+.025);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+.18);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+.21);o.onended=()=>c.close();}catch(e){}}
+function handleText(text){
+ try{
+  const r=parseRecord(text),old=records.find(x=>x.id===r.id);
+  if(old){
+   if(old.raw!==r.raw)throw Error('Conflicting data for an existing submission ID. This was not recorded.');
+   selection=old.id;renderAll();status(`${r.name} already recorded — ${r.score}/15, ${(r.runCount||1)} runs. ${r.review==='None'?'No review indicators.':'Review: '+r.review+'.'}`,false,true);return false;
+  }
+  records.unshift(r);selection=r.id;persist();renderAll();status(`Recorded ${r.name}: ${r.score}/15, ${(r.runCount||1)} runs. ${r.review==='None'?'No review indicators.':'Review indicators: '+r.review+'.'} Show the screen to the student.`,false,true);sound();return true;
+ }catch(e){status(e.message||'Could not read the QR data.',true);return false;}
+}
+function categoryStats(r){return CATEGORIES.map(cat=>{
+ const items=cat.ids.map(i=>r.answers[i]),possible=items.reduce((s,a)=>s+a.possible,0),earned=items.reduce((s,a)=>s+a.earned,0),attempted=items.filter(x=>x.answered).length;
+ return {...cat,possible,earned,attempted,pct:possible?100*earned/possible:null};
+});}
+function radarSVG(stats){
+ const cx=220,cy=171,r=103;
+ const angles=stats.map((_,i)=>-Math.PI/2+i*Math.PI/2);
+ const position=(a,R)=>[cx+Math.cos(a)*R,cy+Math.sin(a)*R];
+ const poly=ratio=>angles.map(a=>position(a,r*ratio).map(n=>n.toFixed(1)).join(',')).join(' ');
+ const grid=[.25,.5,.75,1].map(k=>`<polygon class="gridline" points="${poly(k)}"/>`).join('');
+ const axes=angles.map(a=>{const [x,y]=position(a,r);return `<line class="axis" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`;}).join('');
+ const pts=angles.map((a,i)=>position(a,r*((stats[i].pct||0)/100)));
+ const dots=pts.map(([x,y],i)=>stats[i].pct===null?'':`<circle class="vertex" cx="${x}" cy="${y}" r="4.4"/>`).join('');
+ const polypts=pts.map(([x,y])=>`${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+ const labels=angles.map((a,i)=>{const [x,y]=position(a,r+39);return `<text x="${x}" y="${y}" text-anchor="middle" dominant-baseline="middle">${esc(stats[i].label)}</text>`;}).join('');
+ return `<svg class="radar" viewBox="0 0 440 358" role="img" aria-label="Skills radar with four categories. Exact marks are listed below.">${grid}${axes}<polygon class="area" points="${polypts}"/>${dots}${labels}</svg>`;
+}
+function markLabel(r){return r.score+'/15'+(r.mode==='boss'?' · Boss':'');}
+function teacherTrend(r){
+ const arr=r.trend||[r.score],W=420,H=132,left=33,right=13,top=15,bottom=24;
+ const x=i=>left+(arr.length===1?(W-left-right)/2:i*(W-left-right)/(arr.length-1));
+ const y=v=>top+(18-v)*(H-top-bottom)/18;
+ const lines=[0,6,12,18].map(v=>`<line class="gridline" x1="${left}" x2="${W-right}" y1="${y(v)}" y2="${y(v)}"/><text x="4" y="${y(v)+4}">${v}</text>`).join('');
+ const path=arr.map((v,i)=>x(i)+','+y(v)).join(' ');
+ const points=arr.map((v,i)=>`<circle class="${v===r.score?'best-dot':'chart-dot'}" cx="${x(i)}" cy="${y(v)}" r="4.5"/>`).join('');
+ return `<div class="attempt-chart"><h3>Progress over ${r.runCount||1} run${r.runCount===1?'':'s'}</h3><p class="tiny">Best on run #${r.bestAttempt||1} · ${r.mode==='boss'?'Boss challenge':'Standard'} · raw marks (Boss may reach 18/15)</p>
+ <svg class="spark" viewBox="0 0 ${W} ${H}" role="img" aria-label="Recent attempt scores: ${arr.join(', ')}">${lines}<polyline class="trend-path" points="${path}"/>${points}<text x="${left}" y="${H-1}">#${(r.trendOffset||0)+1}</text><text text-anchor="end" x="${W-right}" y="${H-1}">#${r.runCount||1}</text></svg><p class="tiny">Recent marks: ${arr.join(' → ')}${r.runCount>arr.length?' (last 12 runs)':''}</p></div>`;
+}
+function renderSelected(){
+ const box=$('selectedPanel');const r=records.find(x=>x.id===selection);
+ $('printSelected').disabled=!r;
+ if(!r){box.innerHTML='<div class="empty">Scan the first QR code to reveal a student’s score and diagnostic skills chart.</div>';return;}
+ const stats=categoryStats(r);
+ const list=stats.map(s=>`<div class="skill"><strong>${s.name}</strong><small>${s.possible?`${s.earned}/${s.possible} marks · ${s.attempted} question${s.attempted===1?'':'s'}`:'Not assessed'}</small><div class="bar"><span style="width:${s.pct||0}%"></span></div></div>`).join('');
+ const rows=r.answers.map(a=>`<tr><td>${esc(a.topic)}</td><td>${a.answered?esc(a.level):'—'}</td><td>${a.answered?`${a.earned} / ${a.possible}`:'Not reached'}</td></tr>`).join('');
+ box.innerHTML=`<div class="selected-top"><div><h3>${esc(r.name)}</h3><p class="submeta">Submission ${esc(r.id.toUpperCase())} · ${esc(new Date(r.scannedAt).toLocaleString('en-GB'))}<br>${r.attempted} answered · ${r.correct} correct · ${r.runCount||1} run${(r.runCount||1)===1?'':'s'}</p></div><div class="score">${r.score}<small> / 15</small>${r.mode==='boss'?'<span class="boss-tag">Boss</span>':''}</div></div>
+ <div class="teacher-grade" aria-label="Estimated IB-equivalent grade ${gradeFromScore(r.score)} of 7 (May 2025 TZ3)">
+ <div class="teacher-grade-wax"><span>${gradeFromScore(r.score)}</span></div>
+ <div><b>Estimated IB-style grade ${gradeFromScore(r.score)}/7</b><small>AA SL · May 2025 TZ3 overall boundaries · classroom comparison only (Boss marks capped at 15/15).</small></div></div>
+ <div class="review-indicator ${r.review==='None'?'clean':''}"><strong>${r.review==='None'?'No review indicators':'Review indicators · '+esc(r.review)}</strong>
+ <p>${r.review==='None'?'No tracked clipboard attempts, repeated focus losses, extended pauses, page reloads or context-menu attempts were recorded.':'These are client-reported events for follow-up, not proof of misconduct. A legitimate phone interruption or accessibility interaction can produce them.'}</p></div>
+ <div class="telemetry-grid">${[
+ ['Focus losses',r.telemetry.focusLosses],['Paused',r.telemetry.pausedSeconds+'s'],['Active',r.telemetry.activeSeconds+'s'],
+ ['Copy attempts',r.telemetry.copy],['Paste attempts',r.telemetry.paste],['Cut attempts',r.telemetry.cut],
+ ['Context menus',r.telemetry.menu],['Page reloads',r.telemetry.reloads]
+ ].map(([label,value])=>`<div class="telemetry-cell"><b>${esc(value)}</b><span>${esc(label)}</span></div>`).join('')}</div>
+ ${teacherTrend(r)}
+ <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.10em;color:#53767a;margin:23px 0 0">Best-run skill snapshot</h3>${radarSVG(stats)}<div class="skill-list">${list}</div>
+ <p class="tiny">The chart shows marks earned ÷ marks offered in each category. Boss questions each offer 3 marks. Categories with no attempted questions are marked “Not assessed.”</p>
+ <details style="margin-top:18px"><summary style="font-size:13px;font-weight:800;cursor:pointer">Individual questions (${r.attempted}/6)</summary><table class="topics"><thead><tr><th>Skill</th><th>Level</th><th>Marks</th></tr></thead><tbody>${rows}</tbody></table></details>
+ <details style="margin-top:15px"><summary style="font-size:12px;font-weight:800;cursor:pointer">View plain-text QR record</summary><pre class="raw-record">${esc(r.raw)}</pre><p class="tiny">Checksum catches accidental text corruption; it is not a digital signature.</p></details>`;
+}
+function renderTable(){
+ const filt=$('filter').value.trim().toLocaleLowerCase(),shown=records.filter(x=>x.name.toLocaleLowerCase().includes(filt)||x.id.includes(filt));
+ $('rows').innerHTML=shown.length?shown.map(r=>`<tr class="${r.id===selection?'selected':''}"><td><strong>${esc(r.name)}</strong></td><td class="mark">${r.score}/15 <span class="inline-grade" title="Estimated IB-style grade, May 2025 TZ3">G${gradeFromScore(r.score)}</span> ${r.mode==='boss'?'<span class="boss-tag">Boss</span>':''}</td><td>${r.runCount||1}</td><td>${r.attempted}/6</td><td>${r.correct}</td><td>${r.review==='None'?'<span class="pill">None</span>':`<span class="pill" style="background:#fff1e7;color:#a45a28">Review</span>`}</td><td>${esc(new Date(r.scannedAt).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}))}</td><td><button class="textbtn" type="button" data-id="${r.id}">View</button><button class="textbtn" style="color:#ab413d" type="button" data-remove="${r.id}" aria-label="Remove ${esc(r.name)}">Remove</button></td></tr>`).join(''):`<tr><td colspan="8">${records.length?'No matching students.':'No students checked in yet.'}</td></tr>`;
+ $('rows').querySelectorAll('[data-id]').forEach(el=>el.addEventListener('click',()=>{selection=el.dataset.id;renderAll();document.querySelector('.review-panel').scrollIntoView({behavior:'smooth',block:'start'});}));
+ $('rows').querySelectorAll('[data-remove]').forEach(el=>el.addEventListener('click',()=>{const r=records.find(x=>x.id===el.dataset.remove);if(r&&confirm('Remove '+r.name+' from this browser\'s roster?')){records=records.filter(x=>x.id!==r.id);if(selection===r.id)selection=records[0]?.id||'';persist();renderAll();}}));
+}
+function renderAll(){
+ $('count').textContent=records.length;
+ $('average').textContent=records.length?(records.reduce((s,r)=>s+r.score,0)/records.length).toFixed(1):'—';
+ $('highest').textContent=records.length?Math.max(...records.map(r=>r.score)):'—';
+ if(selection&&!records.some(r=>r.id===selection))selection=records[0]?.id||'';
+ renderSelected();renderTable();
+ $('exportCSV').disabled=$('exportJSON').disabled=$('clearRoster').disabled=!records.length;
+}
+function blobDownload(content,mime,filename){const url=URL.createObjectURL(new Blob([content],{type:mime})),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),25000);}
+function csvCell(value){const s=String(value??''),safe=/^[=+@\-\t\r]/.test(s)?"'"+s:s;return '"'+safe.replace(/"/g,'""')+'"';}
+function exportCSV(){const header=['Student','Best score','IB-style grade (May 2025 TZ3)','Baseline','Mode','Runs','Best run','Recent trend','First pattern','Answered','Correct','Log earned','Log possible','Functions earned','Functions possible','Translations earned','Translations possible','Dilations earned','Dilations possible','Focus losses','Paused seconds','Active seconds','Copy attempts','Paste attempts','Cut attempts','Context menus','Reloads','Review flags','Session ID','Scanned at'];
+ const lines=[header.map(csvCell).join(',')];for(const r of [...records].reverse()){const stats=categoryStats(r);lines.push([r.name,r.score,gradeFromScore(r.score),15,r.mode||'standard',r.runCount||1,r.bestAttempt||1,(r.trend||[r.score]).join(' > '),r.firstPattern||'',r.attempted,r.correct,...stats.flatMap(s=>[s.earned,s.possible]),r.telemetry.focusLosses,r.telemetry.pausedSeconds,
+ r.telemetry.activeSeconds,r.telemetry.copy,r.telemetry.paste,r.telemetry.cut,r.telemetry.menu,r.telemetry.reloads,r.review,r.id,r.scannedAt].map(csvCell).join(','));}
+ blobDownload('\uFEFF'+lines.join('\r\n'),'text/csv;charset=utf-8','function-lab-class-'+new Date().toISOString().slice(0,10)+'.csv');}
+function exportJSON(){blobDownload(JSON.stringify({type:'function-lab-teacher-v2',exportedAt:new Date().toISOString(),records:records.map(r=>({raw:r.raw,scannedAt:r.scannedAt}))},null,2),'application/json','function-lab-backup-'+new Date().toISOString().slice(0,10)+'.json');}
+async function readImage(file){
+ if(!file||!file.type.startsWith('image/'))throw Error('Choose an image containing a QR code.');
+ const url=URL.createObjectURL(file);
+ try{const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url;});
+  const cv=$('frame'),ctx=cv.getContext('2d',{willReadFrequently:true});const scale=Math.min(1.0,1600/Math.max(img.naturalWidth,img.naturalHeight));cv.width=Math.max(1,Math.round(img.naturalWidth*scale));cv.height=Math.max(1,Math.round(img.naturalHeight*scale));ctx.drawImage(img,0,0,cv.width,cv.height);
+  const text=await decodeFrame(cv);if(!text)throw Error('QR not detected. Try a clearer image, or ask the student to tap “Copy fallback code”.');handleText(text);
+ }finally{URL.revokeObjectURL(url);}
+}
+async function decodeFrame(canvas){
+ const ctx=canvas.getContext('2d',{willReadFrequently:true}),w=canvas.width,h=canvas.height;
+ if(typeof BarcodeDetector!=='undefined'){
+  try{if(!detector)detector=new BarcodeDetector({formats:['qr_code']});const values=await detector.detect(canvas);if(values?.length)return values[0].rawValue;}catch(e){}
+ }
+ if(typeof window.jsQR==='function'){const img=ctx.getImageData(0,0,w,h),qr=window.jsQR(img.data,w,h,{inversionAttempts:'attemptBoth'});if(qr?.data)return qr.data;}
+ return null;
+}
+function stopCamera(){clearTimeout(animation);animation=0;if(stream){for(const t of stream.getTracks())t.stop();stream=null;}const v=$('video');v.pause();v.srcObject=null;v.hidden=true;$('placeholder').hidden=false;$('capture').classList.remove('live');$('cameraStatus').textContent='Camera off';$('startCamera').disabled=false;$('stopCamera').disabled=true;}
+async function scannerReady(){
+ const context=window.isSecureContext,cam=!!navigator.mediaDevices?.getUserMedia;
+ let native=typeof BarcodeDetector!=='undefined';
+ if(native && typeof BarcodeDetector.getSupportedFormats==='function'){
+  try{native=(await BarcodeDetector.getSupportedFormats()).includes('qr_code');}catch(e){native=false;}
+ }
+ return{context,cam,native,library:typeof window.jsQR==='function'};
+}
+async function checkScannerSetup(){
+ const v=await scannerReady();
+ const method=v.native?'Built-in QR scanner':v.library?'Backup QR scanner ('+(window.FunctionLabScannerSource||'loaded')+')':'No QR decoder currently loaded';
+ const message=(v.context?'Secure context':'Local/insecure context')+' · '+(v.cam?'Webcam API available':'Webcam API unavailable')+' · '+method+'. '+
+  (!v.cam?'For webcam scanning, publish on GitHub Pages HTTPS. ':'')+
+  (!v.native&&!v.library?'If scripts are blocked, use the QR text fallback. ':'')+
+  'Manual text entry works without the camera.';
+ status(message,(!v.cam||(!v.native&&!v.library)));
+ return v;
+}
+async function waitForDecoder(timeout=2800){
+ const start=Date.now();
+ do{
+  const v=await scannerReady();if(v.native||v.library)return true;
+  await new Promise(r=>setTimeout(r,180));
+ }while(Date.now()-start<timeout);
+ return false;
+}
+async function startCamera(){
+ if(!navigator.mediaDevices?.getUserMedia){status('Camera unavailable in this browser. Open the teacher page via GitHub Pages HTTPS, or upload/paste a result.',true);return;}
+ if(!(await waitForDecoder())){status('QR scanner library unavailable or blocked. The webcam may not decode codes here. Use student fallback text, or try this page on GitHub Pages HTTPS.',true);return;}
+ try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});const v=$('video');v.srcObject=stream;v.hidden=false;await v.play();$('placeholder').hidden=true;$('capture').classList.add('live');$('cameraStatus').innerHTML='<span class="live-dot"></span>Scanning';$('startCamera').disabled=true;$('stopCamera').disabled=false;status("Camera on. Hold the student's QR steady within the guide.");scanLoop();}catch(err){stopCamera();status('Camera failed: '+(err.message||'permission denied')+'. Upload the screenshot or paste the result instead.',true);}
+}
+async function scanLoop(){
+ if(!stream)return;
+ if(!busy){busy=true;const v=$('video');if(v.readyState>=2&&v.videoWidth){const cv=$('frame'),w=Math.min(900,v.videoWidth),h=Math.round(w*v.videoHeight/v.videoWidth);cv.width=w;cv.height=h;cv.getContext('2d',{willReadFrequently:true}).drawImage(v,0,0,w,h);
+  try{const code=await decodeFrame(cv),now=Date.now();if(code&&code!==lastSeen){lastSeen=code;lastSeenAt=now;handleText(code);}else if(!code&&lastSeen&&now-lastSeenAt>1600){lastSeen='';}}catch(e){status('Scanner error: '+(e.message||'unknown error'),true);}
+ }busy=false;}
+ if(stream)animation=setTimeout(scanLoop,180);
+}
+$('startCamera').addEventListener('click',startCamera);$('stopCamera').addEventListener('click',stopCamera);$('checkCamera').addEventListener('click',checkScannerSetup);
+$('addManual').addEventListener('click',()=>{const code=$('rawCode').value.trim();if(!code){status('Paste the QR verification text first.',true);return;}if(handleText(code))$('rawCode').value='';});
+$('clearInput').addEventListener('click',()=>$('rawCode').value='');
+$('imageUpload').addEventListener('change',async ev=>{const file=ev.target.files?.[0];if(file){try{await readImage(file);}catch(e){status(e.message,true);}ev.target.value='';}});
+$('dropzone').addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='copy';});
+$('dropzone').addEventListener('drop',async e=>{e.preventDefault();const file=Array.from(e.dataTransfer.files).find(f=>f.type.startsWith('image/'));if(file){try{await readImage(file);}catch(err){status(err.message,true);}}});
+document.addEventListener('paste',async e=>{const file=Array.from(e.clipboardData?.items||[]).find(i=>i.type.startsWith('image/'))?.getAsFile();if(file){e.preventDefault();try{await readImage(file);}catch(err){status(err.message,true);}}});
+$('filter').addEventListener('input',renderTable);$('exportCSV').addEventListener('click',exportCSV);$('exportJSON').addEventListener('click',exportJSON);
+$('importJSON').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{const data=JSON.parse(await f.text());if(!['function-lab-teacher-v1','function-lab-teacher-v2'].includes(data.type)||!Array.isArray(data.records))throw Error('Not a Function Lab teacher backup.');let n=0;for(const rec of data.records){const r=parseRecord(rec.raw);if(records.some(x=>x.id===r.id))continue;r.scannedAt=rec.scannedAt||new Date().toISOString();records.push(r);n++;}records.sort((a,b)=>b.scannedAt.localeCompare(a.scannedAt));if(records.length)selection=records[0].id;persist();renderAll();status(`${n} new record${n===1?'':'s'} restored.`,false,true);}catch(err){status(err.message,true);}e.target.value='';});
+$('clearRoster').addEventListener('click',()=>{if(records.length&&confirm(`Clear all ${records.length} teacher records on this device? Export a backup first if needed.`)){records=[];selection='';persist();renderAll();status('Class records cleared.');}});
+$('printSelected').addEventListener('click',()=>window.print());window.addEventListener('pagehide',stopCamera);
+records=safeLoad();selection=records[0]?.id||'';renderAll();
+// In-browser test hook is only active when opened with ?qa=1 (not linked to students).
+if(new URLSearchParams(location.search).has('qa'))window.__QA={parseRecord,handleText,categoryStats,records:()=>records,selection:()=>selection,decodeFrame,readImage};
+})();
+</script>
+</body>
+</html>
