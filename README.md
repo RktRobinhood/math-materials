@@ -2,12 +2,14 @@
 
 Mobile-first six-question adaptive mathematics game with one **20-minute active-time session**. Includes a teacher check-in dashboard for GitHub Pages.
 
+**[Play Function Lab (student quiz)](https://rktrobinhood.github.io/math-materials/)** · **[Open the teacher dashboard](https://rktrobinhood.github.io/math-materials/teacher.html)** · [View the GitHub repository](https://github.com/RktRobinhood/math-materials)
+
 ## Quick deployment
 
-1. Upload **all the files in this folder** (especially `index.html` and `teacher.html`) to the root of your GitHub Pages repository. If replacing v2.3, replace **both** HTML files, because the QR payload is now the shorter `FL4` format.
-2. GitHub repo → Settings → Pages → Deploy from a branch → main / (root). Wait until the GitHub Pages URL is live.
-3. Share your site root (`https://rktrobinhood.github.io/math-materials/`) with students.
-4. Open `https://USERNAME.github.io/REPOSITORY/teacher.html` on your computer. Select **Check scanner setup**, allow webcam access, and scan one test submission. If scanning fails, use a screenshot or paste the plain-text QR record.
+1. Upload **all the files in this folder** (especially `index.html` and `teacher.html`) to the root of your [GitHub repository](https://github.com/RktRobinhood/math-materials). If replacing v2.3, replace **both** HTML files, because the QR payload is now the shorter `FL4` format.
+2. In the repository, open **Settings → Pages → Deploy from a branch → main / (root)**. Wait until the GitHub Pages URL is live.
+3. Share the **[student quiz](https://rktrobinhood.github.io/math-materials/)** with students.
+4. Open the **[teacher dashboard](https://rktrobinhood.github.io/math-materials/teacher.html)** on your computer. Select **Check scanner setup**, allow webcam access, and scan one test submission. If scanning fails, use a screenshot or paste the plain-text QR record.
 5. **Export the teacher CSV or backup JSON before closing/clearing the browser data.** Scores are stored locally in the teacher browser, not on a server.
 
 ## What students see
@@ -25,34 +27,35 @@ Mobile-first six-question adaptive mathematics game with one **20-minute active-
 **Benchmark used: Mathematics: Analysis and Approaches SL, May 2025, Time Zone 3 — overall final grade boundaries (scaled from 0–100).** The complete documented bands are:
 
 | IB grade | Scaled overall percentage |
-|---|---|
-| 1 | 0–9 |
-| 2 | 10–20 |
-| 3 | 21–32 |
-| 4 | 33–47 |
-| 5 | 48–61 |
-| 6 | 62–76 |
-| 7 | 77–100 |
+| --- | --- |
+| 1   | 0–9 |
+| 2   | 10–20 |
+| 3   | 21–32 |
+| 4   | 33–47 |
+| 5   | 48–61 |
+| 6   | 62–76 |
+| 7   | 77–100 |
 
 The app computes `percentage = round(min(best_mark, 15) * 100 / 15)`, then looks up the band. Consequently on this 15-mark quiz:
 
 | Best score /15 | Estimated grade |
-|---|---|
-| 0–1 | 1 |
-| 2–3 | 2 |
-| 4 | 3 |
-| 5–7 | 4 |
-| 8–9 | 5 |
-| 10–11 | 6 |
-| 12–15, or 16–18 in Boss Run | 7 |
+| --- | --- |
+| 0–1 | 1   |
+| 2–3 | 2   |
+| 4   | 3   |
+| 5–7 | 4   |
+| 8–9 | 5   |
+| 10–11 | 6   |
+| 12–15, or 16–18 in Boss Run | 7   |
 
 **This is an illustrative classroom comparison, not an official IB grade or a defensible forecast.** The short adaptive quiz samples only a small part of the full syllabus and has a different difficulty/weighting profile from an IB examination. Boundaries are session-specific and are used only as a recognizable student-facing benchmark. The wax emblem is original artwork, not the official IB seal.
 
 Why May 2025? It is a fully documented and cross-checkable complete 1–7 TZ3 table. May 2026 TZ3 *reported* boundary listings currently available to us include grades 3–7, but not a verified complete 1–7 grade range; the game therefore does not mix undocumented or estimated low-grade cutoffs with the 2026 reports.
 
 References:
-- May 2025 Math AA SL TZ3 subject report: https://sufferingrepo.me/IB%20SUBJECT%20REPORTS/Group%205%20-%20Mathematics/AASL/Maths%20AASL%20Subject%20Report%20M25%20TZ3.pdf
-- Session-by-session sourced boundary comparison: https://www.pietromeloni.com/ib-grade-boundaries/maths-aa-sl
+
+- [May 2025 Math AA SL TZ3 subject report](https://sufferingrepo.me/IB%20SUBJECT%20REPORTS/Group%205%20-%20Mathematics/AASL/Maths%20AASL%20Subject%20Report%20M25%20TZ3.pdf)
+- [Session-by-session sourced boundary comparison](https://www.pietromeloni.com/ib-grade-boundaries/maths-aa-sl)
 
 ## Teacher check-in and QR
 
@@ -70,10 +73,7 @@ Teacher mode accepts **FL4 and older Function Lab v3/v2** check-in records. In a
 
 ## Package
 
-`index.html` — full bundled student quiz (self-contained HTML/CSS/JS including a UTF-8-aware QR encoder)
-
-`teacher.html` — teacher webcam/screenshot/manual check-in, radar and trend, CSV and JSON exports
-
-`VERIFICATION.md` — QA record and caveats
-
-`LICENSES.md`, `APACHE-2.0.txt` — notices for bundled QR code library
+- [`index.html`](index.html) — full bundled student quiz (self-contained HTML/CSS/JS including a UTF-8-aware QR encoder)
+- [`teacher.html`](teacher.html) — teacher webcam/screenshot/manual check-in, radar and trend, CSV and JSON exports
+- [`VERIFICATION.md`](VERIFICATION.md) — QA record and caveats
+- [`LICENSES.md`](LICENSES.md), [`APACHE-2.0.txt`](APACHE-2.0.txt) — notices for bundled QR code library
