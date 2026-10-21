@@ -57,7 +57,3 @@ The checksum catches transcription corruption, **not deliberate tampering**. Cli
 - The activity records only aggregate session evidence (focus/clipboard/reload counts, time) and submitted answers needed to verify the best run. No keylogging, location tracking, or server upload.
 - User-facing fields do not prevent a technically skilled student from decoding or altering client-side data. Use the tool for formative checking rather than high-stakes secure examinations.
 - The full regression test report is in `VERIFICATION.md`.
-
-## Run-local integrity deductions (FL8)
-
-Each Standard or Boss run starts with one warning. Subsequent focus-loss or clipboard attempts during that run deduct one mark each from that run only, with a floor of zero. A retry starts with a fresh warning. The session keeps its cumulative telemetry and the highest net score from any completed run. The QR uses FL8 so the teacher can validate the best run deductions separately from aggregate telemetry.

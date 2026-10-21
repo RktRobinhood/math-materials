@@ -1397,62 +1397,6 @@ main{flex:1;min-width:0;padding:22px 15px 26px}.surface{background:var(--white);
 .map-level{display:inline-block;background:#e4f3ee;color:#1a776c;border:1px solid #c9e6dd;border-radius:7px;padding:3px 6px;font:800 10px system-ui,sans-serif;vertical-align:middle;letter-spacing:.04em}
 @media(max-width:370px){.boss-gate{grid-template-columns:43px 1fr;padding:12px}.boss-emblem{width:42px;height:42px;font-size:25px}.boss-gate-copy b{font-size:13px}.run-control .replaybtn{font-size:17px}}
 @media(prefers-reduced-motion:no-preference){.boss-gate.unlocked .boss-emblem{animation:bossShine 2.6s ease-in-out infinite alternate}@keyframes bossShine{from{filter:brightness(.9);transform:rotate(-8deg) scale(.98)}to{filter:brightness(1.25);transform:rotate(-5deg) scale(1.04)}}}
-
-
-/* v2.6: local cumulative worked-question review. The page remains fully scrollable. */
-.journal{margin:15px 0 20px;padding:14px 12px;border:1px solid #cfdfdf;border-radius:17px;background:#f7faf8;scroll-margin-top:14px}
-.journal-title{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-.journal-title h2{font:normal 26px/1.14 Georgia,serif;margin:0;color:#163c47}
-.journal-count{font-size:11px;font-weight:850;background:#e3f3ee;padding:6px 8px;border-radius:8px;color:#126e66}
-.journal-intro{color:#617a80;font-size:12px;margin:2px 0 12px;line-height:1.4}
-.journal-run{border:1px solid #d8e4e2;border-radius:12px;background:#fff;margin:9px 0;overflow:hidden}
-.journal-run>summary{display:flex;gap:9px;align-items:center;cursor:pointer;padding:13px 12px;list-style:none;color:#233f49}
-.journal-run>summary::-webkit-details-marker{display:none}
-.journal-run>summary:after{content:'+';margin-left:auto;color:#376b6a;font-size:20px;line-height:1}
-.journal-run[open]>summary:after{content:'−'}
-.journal-run .run-title{font-weight:850;font-size:13px;line-height:1.35;min-width:0}
-.journal-run .run-title small{display:block;color:#6a8284;font-weight:600;margin-top:3px;font-size:11px}
-.journal-run .run-score{font-size:12px;font-weight:900;padding:6px 8px;color:#1b6f66;background:#e5f5ee;border-radius:8px;white-space:nowrap}
-.journal-body{border-top:1px solid #e0e9e7;padding:5px 9px 10px}
-.journal-question{padding:12px 8px;border-bottom:1px solid #e6eeed}
-.journal-question:last-child{border-bottom:0;padding-bottom:4px}
-.jq-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.jq-state{display:grid;place-items:center;flex:0 0 29px;height:29px;border-radius:8px;font:950 18px system-ui;background:#e5f5eb;color:#167453}
-.jq-state.wrong{color:#a53f39;background:#fdebe7}
-.jq-state.partial{color:#966323;background:#fff1d9}
-.jq-topic{font-size:11px;font-weight:850;color:#426371}
-.jq-marks{margin-left:auto;font-size:11px;font-weight:850;color:#355e66;white-space:nowrap}
-.jq-prompt{font-size:14px;font-weight:800;line-height:1.45;color:#1b3442;margin:0 0 6px}
-.jq-equation{font-size:16px;font-family:Georgia,serif;background:#f1f5f5;border:1px solid #e3ecea;border-radius:9px;margin:7px 0;padding:9px 10px;overflow-wrap:anywhere}
-.jq-desc{font-size:12px;line-height:1.46;color:#586d75;margin:5px 0 8px}
-.jq-answer{display:grid;gap:6px;font-size:12px;line-height:1.4;margin-top:10px}
-.jq-answer div{padding:7px 9px;border-radius:8px;background:#f2f6f5;overflow-wrap:anywhere}
-.jq-answer .submitted{border-left:3px solid #9eb5b5}
-.jq-answer .correct-answer{border-left:3px solid #4ea58f;background:#ecf8f1}
-.jq-answer b{font-size:10px;display:block;color:#48636d;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
-.jq-plot{background:#fbfdfd;border:1px solid #e1eae7;border-radius:11px;padding:8px 6px;margin:9px 0 5px}
-.jq-plot canvas{display:block;width:100%;height:194px;touch-action:pan-y;pointer-events:none;max-width:470px;margin:auto}
-.jq-plot small{font-size:10px;color:#5b7b80;display:block;text-align:center}
-.journal-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.journal-actions button{min-height:49px;font-size:12px;box-shadow:none}
-.journal-actions button:first-child{grid-column:1/-1;background:#16665f}
-.journal-warning{font-size:11px;color:#765b3c;background:#fff8e9;border-radius:8px;padding:9px;margin:8px 0}
-@media(max-width:350px){.journal-actions{grid-template-columns:1fr}.journal-actions button:first-child{grid-column:auto}.jq-plot canvas{height:165px}}
-@media print{.journal{break-inside:avoid}}
-
-
-/* Per-run warning and deductions; session-wide event telemetry stays cumulative. */
-.integrity-pop{position:fixed;z-index:95;left:50%;top:max(14px,env(safe-area-inset-top));transform:translateX(-50%);width:min(calc(100vw - 24px),500px);padding:16px 18px;background:#862d29;color:#fff;border:3px solid #ffe0aa;border-radius:15px;box-shadow:0 16px 46px #202b3b63;text-align:center}
-.integrity-pop strong{font-size:clamp(19px,6vw,29px);line-height:1.12;display:block}.integrity-pop span{font-size:13px;display:block;margin:5px 0 0;line-height:1.4}
-.integrity-pop.first{background:#724a21;border-color:#f9deaa}
-.integrity-note{border:2px solid #f0b6a3;border-radius:12px;padding:13px 12px;background:#fff1eb;margin:13px 0;color:#722c26;font-size:13px;line-height:1.45}
-.integrity-note strong{font-size:18px;display:block;margin-bottom:4px}
-.integrity-note.warning-only{background:#fff9e7;border-color:#efdda6;color:#664917}
-.pause-impact{padding:13px;border:2px solid #f3ceb0;border-radius:12px;background:#fff7ee;color:#6f3328;margin-bottom:14px;font-size:17px;font-weight:900;text-align:center;line-height:1.3}
-.pause-impact.deduct{background:#ffebe6;border-color:#e58c75;font-size:24px}
-.integrity-inline{color:#9b3e32;font-weight:900}
-@media(prefers-reduced-motion:reduce){.integrity-pop{animation:none}}
-
 </style>
 </head>
 <body>
@@ -1481,11 +1425,9 @@ main{flex:1;min-width:0;padding:22px 15px 26px}.surface{background:var(--white);
 <div class="sheetnote">Logarithms require positive arguments; the base must be positive and not equal to 1.</div>
 <button class="primary" id="sheetDone" type="button" style="margin-top:20px">Back to quiz</button></div></div>
 <div id="toast" class="toast" role="status" hidden></div>
-<div id="integrityAlert" class="integrity-pop" role="alert" aria-live="assertive" hidden><strong id="integrityAlertTitle"></strong><span id="integrityAlertText"></span></div>
 <div id="pausedOverlay" class="paused-cover" role="dialog" aria-modal="true" aria-labelledby="pausedTitle" hidden>
  <div class="paused-panel"><div class="eyebrow" style="color:#9ee0d2">Assessment interrupted</div><h2 id="pausedTitle">Quiz paused</h2>
- <div id="pauseImpact" class="pause-impact" role="alert">You left the quiz</div>
- <p>The clock is paused. Return here and press Resume to continue. An ordinary phone interruption may trigger the same browser event; your teacher can review the counts.</p>
+ <p>Return to Function Lab to continue. The timer is stopped while this screen is displayed. Your teacher can review the number and duration of interruptions.</p>
  <button class="primary" type="button" id="resumeBtn">Resume assessment →</button></div>
 </div>
 <section id="printable" class="printable" aria-hidden="true"></section>
@@ -1494,7 +1436,6 @@ main{flex:1;min-width:0;padding:22px 15px 26px}.surface{background:var(--white);
 (()=>{
 const APP_ID='function-lab-aa-sl-v2.3'; // Stable session identity across v2.3 to v2.4 updates
 const STORAGE='function-lab-aa-sl-session-v3';
-const JOURNAL_VERSION=1; // Local-only, full worked-question review. Never placed inside the QR.
 const NAME_STORAGE='function-lab-aa-sl-last-name-v3';
 const QUESTION_DWELL=5000; // Five active seconds per question, including time used to inspect graphs.
 const PREVIOUS='function-lab-previous-variants-v2';
@@ -1510,7 +1451,7 @@ const GRADE_SESSION='May 2025 · TZ3 · +8pp';
 function gradeFromScore(raw){const score=Math.max(0,Number(raw)||0);if(score>MAX_SCORE)return '7+';
  const percentage=Math.round(100*Math.min(MAX_SCORE,score)/MAX_SCORE);
  let grade=1;for(let i=1;i<GRADE_STARTS.length;i++)if(percentage>=GRADE_STARTS[i])grade=i+1;return grade;}
-function gradeFromBest(){return gradeFromScore(calculateScore());}
+function gradeFromBest(){return gradeFromScore(session?.best?.score||0);}
 function gradeLabel(){const g=gradeFromBest();return g==='7+'?'7+ (Boss bonus)':g+'/7';}
 // Sculpted vector wax emblem. Not the official IB seal or logo.
 function waxSealSVG(grade){
@@ -1550,7 +1491,7 @@ const TOPICS=['log','reconstruct','shiftH','shiftV','scaleH','scaleV'];
 const COLORS={blue:'#187b96',coral:'#d65740',axis:'rgba(43,89,105,.82)',grid:'rgba(54,108,126,.30)',major:'rgba(54,108,126,.43)',minor:'rgba(54,108,126,.12)'};
 const $=id=>document.getElementById(id);
 const main=$('main'),clock=$('clock');
-let session=null,question=null,selected=-1,zoom=1,panX=0,panY=0,timer=null,lockTimer=null,qrMatrix=null,focusDebounce=0,lastClipboard={type:'',when:0},integrityAlertTimer=0,wakeLock=null;
+let session=null,question=null,selected=-1,zoom=1,panX=0,panY=0,timer=null,lockTimer=null,qrMatrix=null,focusDebounce=0,lastClipboard={type:'',when:0};
 function esc(v){return String(v).replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));}
 function stripTags(s){
  const d=document.createElement('div');d.innerHTML=String(s||'');
@@ -1823,19 +1764,19 @@ function getQuestion(topic,level,index){
 }
 // Coordinates are always bounded around the origin; zoom is limited and there is no panning.
 function curveY(c,x){switch(c.type){case 'linear':return c.m*x+c.c;case 'reciprocal':return c.a/(x-c.h)+c.k;case 'exponential':return c.a*Math.pow(c.b,x-c.h)+c.k;case 'expScale':return Math.pow(2,x/c.s)+c.k;default:return NaN;}}
-function renderGraph(canvas=null,graphSpec=null,viewZoom=zoom,viewPanX=panX,viewPanY=panY){
- const cv=canvas||$('plot'),g=graphSpec||question?.graph;if(!cv||!g)return;
+function renderGraph(){
+ const cv=$('plot');if(!cv||!question||!question.graph)return;
  const rect=cv.getBoundingClientRect();let w=Math.round(rect.width),h=Math.round(rect.height);if(w<80||h<80)return;
  const dpr=Math.min(window.devicePixelRatio||1,3);cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
  const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
  ctx.fillStyle='#fbfdfd';ctx.fillRect(0,0,w,h);
  const frame={left:31,top:15,right:w-12,bottom:h-27};
  const W=frame.right-frame.left,H=frame.bottom-frame.top;
- const unit=Math.min(W/13.2,H/12.4)*viewZoom;
+ const unit=Math.min(W/13.2,H/12.4)*zoom;
  const ox=frame.left+W/2,oy=frame.top+H/2;
- const px=x=>ox+(x-viewPanX)*unit,py=y=>oy-(y-viewPanY)*unit;
- const xmin=viewPanX+(frame.left-ox)/unit,xmax=viewPanX+(frame.right-ox)/unit;
- const ymin=viewPanY+(oy-frame.bottom)/unit,ymax=viewPanY+(oy-frame.top)/unit;
+ const px=x=>ox+(x-panX)*unit,py=y=>oy-(y-panY)*unit;
+ const xmin=panX+(frame.left-ox)/unit,xmax=panX+(frame.right-ox)/unit;
+ const ymin=panY+(oy-frame.bottom)/unit,ymax=panY+(oy-frame.top)/unit;
  ctx.save();ctx.beginPath();ctx.rect(frame.left,frame.top,W,H);ctx.clip();
  // Graph paper: translucent one-unit lines, stronger axes/five-unit guides.
  // Only show half-unit subdivisions when zoomed in enough to avoid mobile clutter.
@@ -1857,7 +1798,7 @@ function renderGraph(canvas=null,graphSpec=null,viewZoom=zoom,viewPanX=panX,view
  }
  // Faint dotted projections make labelled point coordinates easier to determine.
  ctx.save();ctx.setLineDash([2,4]);ctx.strokeStyle='rgba(54,108,126,.40)';ctx.lineWidth=1;
- for(const pt of g.points||[]){
+ for(const pt of question.graph.points||[]){
   if(pt.label===false)continue;
   const X=px(pt.x),Y=py(pt.y);
   if(X<frame.left||X>frame.right||Y<frame.top||Y>frame.bottom)continue;
@@ -1867,12 +1808,12 @@ function renderGraph(canvas=null,graphSpec=null,viewZoom=zoom,viewPanX=panX,view
   ctx.stroke();
  }
  ctx.restore();
- for(const a of g.asymptotes||[]){
+ for(const a of question.graph.asymptotes||[]){
   let pos=a.type==='x'?px(a.value):py(a.value);
   ctx.beginPath();ctx.save();ctx.setLineDash([5,5]);ctx.strokeStyle=a.tone==='blue'?'rgba(24,123,150,.5)':'rgba(214,87,64,.65)';ctx.lineWidth=1.55;
   if(a.type==='x'){ctx.moveTo(pos,frame.top);ctx.lineTo(pos,frame.bottom);}else{ctx.moveTo(frame.left,pos);ctx.lineTo(frame.right,pos);}ctx.stroke();ctx.restore();
  }
- for(const c of g.curves){
+ for(const c of question.graph.curves){
   ctx.beginPath();ctx.strokeStyle=COLORS[c.tone];ctx.lineWidth=c.tone==='coral'?3.35:2.75;ctx.lineJoin='round';ctx.lineCap='round';
   let connected=false,prevY=NaN,prevX=NaN;
   for(let i=0;i<=W*2;i++){
@@ -1886,7 +1827,7 @@ function renderGraph(canvas=null,graphSpec=null,viewZoom=zoom,viewPanX=panX,view
   }
   ctx.stroke();
  }
- for(const pt of g.points||[]){
+ for(const pt of question.graph.points||[]){
   const X=px(pt.x),Y=py(pt.y);if(X<frame.left-6||X>frame.right+6||Y<frame.top-6||Y>frame.bottom+6)continue;
   const color=COLORS[pt.tone];
   ctx.beginPath();ctx.arc(X,Y,8,0,2*Math.PI);ctx.fillStyle='rgba(255,255,255,.96)';ctx.fill();
@@ -1903,12 +1844,12 @@ function renderGraph(canvas=null,graphSpec=null,viewZoom=zoom,viewPanX=panX,view
  ctx.restore();
  ctx.font='600 11px system-ui,sans-serif';ctx.fillStyle='#4c6974';ctx.textAlign='center';
  for(let x=Math.ceil(xmin);x<=Math.floor(xmax);x++){
-  if(x===0||Math.abs(x)>20||viewZoom>1.65&&x%2!==0)continue;
+  if(x===0||Math.abs(x)>20||zoom>1.65&&x%2!==0)continue;
   ctx.fillText(String(x),px(x),frame.bottom+14);
  }
  ctx.textAlign='right';
  for(let y=Math.ceil(ymin);y<=Math.floor(ymax);y++){
-  if(y===0||Math.abs(y)>20||viewZoom>1.65&&y%2!==0)continue;
+  if(y===0||Math.abs(y)>20||zoom>1.65&&y%2!==0)continue;
   ctx.fillText(String(y),frame.left-6,py(y)+3);
  }
  ctx.font='italic 13px Georgia,serif';ctx.fillStyle='#315767';ctx.textAlign='right';ctx.fillText('x',frame.right-3,Math.max(frame.top+12,Math.min(frame.bottom-5,py(0)-6)));ctx.textAlign='left';ctx.fillText('y',Math.max(frame.left+5,Math.min(frame.right-9,px(0)+6)),frame.top+11);
@@ -1923,52 +1864,9 @@ function pausedElapsed(){return (session?.pausedMs||0)+(session?.pausedAt?(Date.
 function isExpired(){return session&&!session.finishedAt&&activeElapsed()>=DURATION;}
 function quizActive(){return !!(session&&!session.finishedAt&&session.phase==='running'&&session.index<ROUNDS);}
 function sessionOpen(){return !!(session&&!session.finishedAt);}
-function integrityState(){if(!session)return {events:0,deductions:0,warningUsed:false};
- if(!session.integrity||!Number.isSafeInteger(session.integrity.events))session.integrity={events:0,deductions:0,warningUsed:false,last:'',log:[]};
- return session.integrity;
-}
-function penaltyCount(){return session?.best?.deductions||0;}
-function showIntegrityAlert(title,detail,deducted){
- const panel=$('integrityAlert');$('integrityAlertTitle').textContent=title;$('integrityAlertText').textContent=detail;
- panel.classList.toggle('first',!deducted);panel.hidden=false;clearTimeout(integrityAlertTimer);
- integrityAlertTimer=setTimeout(()=>{panel.hidden=true;},5700);
-}
-function integrityEvent(kind){
- if(!quizActive())return null;
- const guard=integrityState();guard.events++;
- let msg;
- if(guard.events===1){guard.warningUsed=true;msg='FIRST WARNING · NO MARK DEDUCTED';}
- else{guard.deductions++;msg='−1 MARK · PENALTY '+guard.deductions;}
- guard.last=kind;
- guard.log.push({kind,run:(session.history||[]).length+1,at:Math.round(activeElapsed()/1000),deducted:guard.events>1});
- if(guard.log.length>50)guard.log.shift();
- saveSession();
- if(kind!=='focus')showIntegrityAlert(msg,'Copy/paste is disabled. Further attempts or leaving the quiz cost one mark.',guard.events>1);
- return {deducted:guard.events>1,msg};
-}
-function paintPause(){
- const p=$('pausedOverlay');p.hidden=!sessionOpen()||!session?.pausedAt;
- if(!p.hidden){
-  const impact=$('pauseImpact'),event=integrityState();
-  impact.classList.toggle('deduct',event.events>1&&event.last==='focus');
-  impact.textContent=event.last==='focus'?(event.events===1?'FIRST WARNING · You left the quiz':`−1 MARK · ${event.deductions} total deductions`):'Quiz paused · resume when ready';
- }
-}
-function beginPause(reason){
- if(!sessionOpen()||session.pausedAt)return;
- // A blur and visibilitychange during one interruption count as ONE episode.
- const duringQuestion=quizActive();
- if(duringQuestion){session.focusLosses=(session.focusLosses||0)+1;integrityEvent('focus');}
- session.pausedAt=Date.now();session.pauseReason=reason;
- saveSession();paintPause();startClock();
-}
-async function keepScreenAwake(){
- if(!sessionOpen()||document.hidden||!('wakeLock' in navigator)||wakeLock)return;
- try{wakeLock=await navigator.wakeLock.request('screen');wakeLock.addEventListener('release',()=>wakeLock=null);}catch(_e){wakeLock=null;}
-}
-function releaseWakeLock(){if(wakeLock){try{wakeLock.release();}catch(_e){}wakeLock=null;}}
-
-function resumeQuiz(){if(!sessionOpen()||!session.pausedAt)return;if(document.hidden)return;session.pausedMs=(session.pausedMs||0)+(Date.now()-session.pausedAt);session.pausedAt=null;saveSession();paintPause();startClock();updateLockButton();keepScreenAwake();}
+function paintPause(){const p=$('pausedOverlay');p.hidden=!sessionOpen()||!session?.pausedAt;}
+function beginPause(reason){if(!sessionOpen()||session.pausedAt)return;session.pausedAt=Date.now();session.focusLosses=(session.focusLosses||0)+1;session.pauseReason=reason;saveSession();paintPause();startClock();}
+function resumeQuiz(){if(!sessionOpen()||!session.pausedAt)return;if(document.hidden)return;session.pausedMs=(session.pausedMs||0)+(Date.now()-session.pausedAt);session.pausedAt=null;saveSession();paintPause();startClock();updateLockButton();}
 function startClock(){clearInterval(timer);if(!session||session.finishedAt){clock.hidden=true;$('timerRail').hidden=true;return;}
  clock.hidden=false;$('timerRail').hidden=false;
  const tick=()=>{const ms=DURATION-activeElapsed();clock.textContent=session.pausedAt?'PAUSED':formatTime(ms);
@@ -1977,27 +1875,7 @@ function startClock(){clearInterval(timer);if(!session||session.finishedAt){cloc
  clock.classList.toggle('urgent',ms<120000&&!session.pausedAt);if(ms<=0&&!session.pausedAt&&!session.finishedAt)finish(true);};
  tick();timer=setInterval(tick,500);paintPause();}
 function runScore(answers){return answers.reduce((sum,a)=>sum+a.points,0);}
-const CREDIT_TABLE=[[0,0],[0,1],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2],[2,3]];
-function encodeCredit(level,earned){const i=CREDIT_TABLE.findIndex(row=>row[0]===level&&row[1]===earned);if(i<0)throw Error('Invalid credit');return String(i);}
-function decodeCredit(ch){if(ch==='-')return null;return CREDIT_TABLE[Number(ch)]||null;}
-function runPattern(answers){return TOPICS.map(t=>{const a=answers.find(x=>x.topic===t);return a?encodeCredit(a.level,a.points):'-';}).join('');}
-// Sessions from earlier releases retained only their personal-best questions.
-// Upgrade their compact run patterns without claiming to recover unseen questions.
-function migrateJournal(){if(!session||session.journalVersion===JOURNAL_VERSION)return;
- session.history=session.history||[];
- integrityState();
- for(const run of session.history){
-  if(run.patternVersion!==6){
-   run.pattern=Array.from(run.pattern||'',ch=>{if(ch==='-')return '-';const n=Number(ch),lv=n%3;return encodeCredit(lv,n>=3?lv+1:0);}).join('');
-   run.patternVersion=6;
-  }
- }
- if(!Array.isArray(session.journal)){
-  session.journal=(session.best?.answers||[]).map(a=>({run:session.best.attemptNo||1,mode:session.best.mode||'standard',round:a.round,topic:a.topic,category:a.topic,level:a.level,correct:!!a.correct,points:a.points||0,possible:a.possible||a.level+1,prompt:a.prompt||'',equation:'',desc:'',response:a.response||'',correctAnswer:null,graph:null,legacy:true}));
- }
- session.journalVersion=JOURNAL_VERSION;
- saveSession();
-}
+function runPattern(answers){return TOPICS.map(t=>{const a=answers.find(x=>x.topic===t);return a?String(a.level+(a.correct?3:0)):'-';}).join('');}
 function beginRun(mode){
  if(!session||session.finishedAt)return;if(isExpired()){finish(true);return;}
  if(mode==='boss'&&!session.bossUnlocked)return;
@@ -2007,26 +1885,24 @@ function beginRun(mode){
  session.seed=nextSeed;session.order=order;session.phase='running';session.mode=mode;session.index=0;
  session.level=mode==='boss'?2:0;session.wrongStreak=0;session.answers=[];
  session.previousVariants={...session.previousVariants,...(session.variantChoices||{})};
- session.variantChoices={};session.integrity={events:0,deductions:0,warningUsed:false,last:'',log:[]};session.questionEnteredAt=activeElapsed();session.runStartedAt=activeElapsed();
- saveSession();renderQuestion();keepScreenAwake();
+ session.variantChoices={};session.questionEnteredAt=activeElapsed();session.runStartedAt=activeElapsed();
+ saveSession();renderQuestion();
 }
 function finishRun(){
  if(!session||session.phase!=='running')return;
  const answers=session.answers,score=runScore(answers),mode=session.mode||'standard';
  if(answers.length){
-  const deductions=integrityState().deductions||0,netScore=Math.max(0,score-deductions);
-  const entry={score:netScore,rawScore:score,deductions,mode,correct:answers.filter(a=>a.correct).length,attempted:answers.length,pattern:runPattern(answers),patternVersion:6,elapsed:Math.max(0,Math.round((activeElapsed()-session.runStartedAt)/1000))};
+  const entry={score,mode,correct:answers.filter(a=>a.correct).length,attempted:answers.length,pattern:runPattern(answers),elapsed:Math.max(0,Math.round((activeElapsed()-session.runStartedAt)/1000))};
   session.history.push(entry);
   const attemptNo=session.history.length;
-  if(!session.best||netScore>session.best.score){session.best={...entry,attemptNo,answers:answers.map(a=>({...a}))};}
-  if(mode==='standard'&&netScore>=13)session.bossUnlocked=true;
+  if(!session.best||score>session.best.score){session.best={...entry,attemptNo,answers:answers.map(a=>({...a}))};}
+  if(mode==='standard'&&score>=13)session.bossUnlocked=true;
  }
  session.phase='between';saveSession();
 }
 function finish(timedOut=false){
  if(!session||session.finishedAt)return;
  if(session.phase==='running')finishRun();
- releaseWakeLock();
  if(session.pausedAt){session.pausedMs=(session.pausedMs||0)+(Date.now()-session.pausedAt);session.pausedAt=null;}
  session.finishedAt=Date.now();session.timedOut=!!timedOut;session.activeMs=Math.min(DURATION,activeElapsed());session.phase='submitted';
  $('sheetOverlay').hidden=true; // A formula-sheet modal must never conceal automatic time-out results.
@@ -2041,7 +1917,7 @@ function updateLockButton(){
 }
 function setView(html){main.innerHTML=html;window.scrollTo({top:0,behavior:'auto'});}
 function renderWelcome(){question=null;clock.hidden=true;$('timerRail').hidden=true;clearInterval(timer);clearInterval(lockTimer);setView(`
-<div class="surface"><div class="hero"><div class="eyebrow">FUNCTION LAB · 15-MIN CHALLENGE</div><h1>Think in<br>functions.</h1><p>Six questions per run. Chase your high score. Reach <b>13/15</b> to unlock <b>Boss Run</b>.</p>
+<div class="surface"><div class="hero"><div class="eyebrow">FUNCTION LAB · 15-MIN CHALLENGE</div><h1>Think in<br>functions.</h1><p>Six questions per run. Chase your high score. Earn <b>15/15</b> to unlock the <b>Boss Run</b>.</p>
 <div class="hero-art" aria-hidden="true"><svg viewBox="0 0 440 108" preserveAspectRatio="none"><path class="curve-one" d="M2 96 L149 14 L239 -40"/><path class="curve-two" d="M170 101 C205 104 223 97 244 84 C267 70 272 21 310 11 C346 3 400 4 445 4"/><circle class="dot" cx="245" cy="84" r="6"/><circle class="dot" cx="310" cy="11" r="6"/></svg></div></div>
 <div class="pad"><div class="stats"><div class="stat"><strong>06</strong><span>Per run</span></div><div class="stat"><strong>15</strong><span>Total minutes</span></div><div class="stat"><strong>18</strong><span>Boss maximum</span></div></div>
 <form id="startForm"><label class="fieldlabel" for="studentName">Your name (saved for every run)</label><input class="textinput" id="studentName" name="name" maxlength="32" autocomplete="name" enterkeyhint="go" placeholder="First and last name" required><div class="error" id="startError" role="alert"></div><button class="primary" type="submit">Begin first run <span aria-hidden="true">→</span></button></form>
@@ -2056,7 +1932,7 @@ function renderWelcome(){question=null;clock.hidden=true;$('timerRail').hidden=t
   let previousVariants={};try{previousVariants=JSON.parse(localStorage.getItem(PREVIOUS)||'{}')||{};}catch(e){}
   try{localStorage.setItem(NAME_STORAGE,name);}catch(e){}
   const seed=makeSeed();
-  session={app:APP_ID,name,sessionSeed:seed,seed,order:TOPICS.slice(),startedAt:Date.now(),finishedAt:null,phase:'between',mode:'standard',index:0,level:0,wrongStreak:0,answers:[],history:[],journal:[],journalVersion:JOURNAL_VERSION,best:null,bossUnlocked:false,integrity:{events:0,deductions:0,warningUsed:false,last:'',log:[]},timedOut:false,pausedAt:null,pausedMs:0,focusLosses:0,clipboard:{copy:0,paste:0,cut:0,menu:0},reloads:0,previousVariants,variantChoices:{}};
+  session={app:APP_ID,name,sessionSeed:seed,seed,order:TOPICS.slice(),startedAt:Date.now(),finishedAt:null,phase:'between',mode:'standard',index:0,level:0,wrongStreak:0,answers:[],history:[],best:null,bossUnlocked:false,timedOut:false,pausedAt:null,pausedMs:0,focusLosses:0,clipboard:{copy:0,paste:0,cut:0,menu:0},reloads:0,previousVariants,variantChoices:{}};
   saveSession();beginRun('standard');
  });
 }
@@ -2197,40 +2073,28 @@ function submitAnswer(){
  if(!question||!quizActive()||session.pausedAt)return;
  if(isExpired()){finish(true);return;}
  if(activeElapsed()-session.questionEnteredAt<QUESTION_DWELL){updateLockButton();return;}
- let correct=false,reply='',pointsAwarded=0,correctAnswer='';
+ let correct=false,reply='';
  if(question.type==='mc'){
   if(selected<0){$('answerError').textContent='Choose an answer first.';return;}
   correct=question.options[selected].id===question.correctId;
   reply=stripTags(question.options[selected].html);
-  correctAnswer=stripTags(question.options.find(o=>o.id===question.correctId)?.html||'');
  }else{
   const values=[];
   for(const f of question.fields){const inp=$('in_'+f.id),value=parseMathNumber(inp.value);
    if(value===null){$('answerError').textContent='Complete every box with a valid number. Fractions such as 1/2 are accepted.';inp.focus();return;}
    values.push(value);
   }
-  const matchCount=values.filter((v,i)=>Math.abs(v-question.fields[i].expected)<1e-8).length;
-  correct=matchCount===values.length;
-  const worth=session.mode==='boss'?3:session.level+1;
-  pointsAwarded=correct?worth:Math.min(worth-1,Math.floor(worth*matchCount/values.length));
+  correct=values.every((v,i)=>Math.abs(v-question.fields[i].expected)<1e-8);
   reply=question.fields.map((f,i)=>`${f.label} = ${values[i]}`).join(', ');
-  correctAnswer=question.fields.map(f=>`${f.label} = ${f.expected}`).join(', ');
  }
  const worth=session.mode==='boss'?3:session.level+1;
- const earned=correct?worth:pointsAwarded;
- const snapshot={round:session.index+1,topic:question.topic,level:session.level,prompt:stripTags(question.prompt+' '+question.equation+' '+question.desc),response:reply,correct,points:earned,possible:worth};
- session.answers.push(snapshot);
- session.journal=session.journal||[];
- session.journal.push({run:session.history.length+1,mode:session.mode||'standard',round:session.index+1,topic:question.topic,category:question.category,level:session.level,
-  correct,points:earned,possible:worth,prompt:question.prompt,equation:question.equation||'',desc:question.desc||'',response:reply,correctAnswer,
-  graph:question.graph?JSON.parse(JSON.stringify(question.graph)):null});
+ session.answers.push({round:session.index+1,topic:question.topic,level:session.level,prompt:stripTags(question.prompt+' '+question.equation+' '+question.desc),response:reply,correct,points:correct?worth:0,possible:worth});
  if(session.mode==='boss'){session.level=2;}
  else if(correct){session.wrongStreak=0;session.level=Math.min(2,session.level+1);}
  else {session.wrongStreak++;if(session.wrongStreak>=2){session.level=Math.max(0,session.level-1);session.wrongStreak=0;}}
  session.index++;session.questionEnteredAt=activeElapsed();saveSession();
  if(session.index>=ROUNDS){finishRun();renderResult();}else renderQuestion();
 }
-function rawBestScore(){return session?.best?.rawScore??session?.best?.score??0;}
 function calculateScore(){return session?.best?.score||0;}
 function countCorrect(){return session?.best?.correct||0;}
 function bestAnswers(){return session?.best?.answers||[];}
@@ -2251,9 +2115,8 @@ function studentSkillStats(){const cats=[
  ];
  const byTopic={};for(const topic of TOPICS)byTopic[topic]={earned:0,possible:0,attempted:0};
  for(const run of session?.history||[]){for(let i=0;i<TOPICS.length;i++){
-   const char=String(run.pattern||'')[i];if(!/^[0-8]$/.test(char||''))continue;
-   const decoded=decodeCredit(char);if(!decoded)continue;
-   const [level,earned]=decoded,possible=level+1;
+   const char=String(run.pattern||'')[i];if(!/^[0-5]$/.test(char||''))continue;
+   const val=Number(char),possible=(val%3)+1,earned=val>=3?possible:0;
    const bucket=byTopic[TOPICS[i]];bucket.earned+=earned;bucket.possible+=possible;bucket.attempted++;
  }}
  return cats.map(cat=>{const entries=cat.ids.map(id=>byTopic[id]),earned=entries.reduce((n,x)=>n+x.earned,0),possible=entries.reduce((n,x)=>n+x.possible,0),attempted=entries.reduce((n,x)=>n+x.attempted,0);
@@ -2305,51 +2168,6 @@ function studentSkillsMarkup(stats){
   <div class="result-insight">${insight}</div>
  </section>`;
 }
-
-function journalMarkup(){
- const history=session.history||[],journal=session.journal||[];
- const attempts=history.map((run,i)=>({num:i+1,run,questions:journal.map((q,index)=>({...q,journalIndex:index})).filter(q=>q.run===i+1)})).reverse();
- const groups=attempts.map(({num,run,questions},rank)=>{
-  const qmarkup=questions.map(a=>{
-   const isPartial=!a.correct&&a.points>0,stateClass=a.correct?'':isPartial?'partial':'wrong',icon=a.correct?'\u2713':isPartial?'~':'\u2715';
-   const graph=a.graph?`<div class="jq-plot"><canvas class="review-graph" data-journal-index="${a.journalIndex}" width="460" height="245" role="img" aria-label="Graph shown in question ${a.round}, at its original viewing position"></canvas><small>Original graph \u00b7 blue f(x) / coral g(x) where applicable</small></div>`:'';
-   const eq=a.equation?`<div class="jq-equation math">${a.equation}</div>`:'';
-   const ans=a.correctAnswer==null?'Not saved by the earlier version':esc(a.correctAnswer);
-   const heading=a.category||a.topic;
-   return `<article class="journal-question"><div class="jq-top"><span class="jq-state ${stateClass}" aria-label="${a.correct?'Correct':isPartial?'Partial credit':'Incorrect'}">${icon}</span><span class="jq-topic">Q${a.round} \u00b7 ${esc(heading)} \u00b7 ${esc(levelName(a.level||0))}</span><span class="jq-marks">${a.points}/${a.possible}</span></div>
-   <p class="jq-prompt">${esc(a.prompt||'Question unavailable')}</p>${eq}${a.desc?`<p class="jq-desc">${esc(a.desc)}</p>`:''}${graph}
-   <div class="jq-answer"><div class="submitted"><b>Your answer</b>${esc(a.response||'(no answer)')}</div><div class="correct-answer"><b>Correct answer</b>${ans}</div></div></article>`;
-  }).join('');
-  return `<details class="journal-run" ${rank===0?'open':''} data-run="${num}"><summary><div class="run-title">RUN ${num}${run.mode==='boss'?' \u00b7 BOSS':''}<small>${run.correct}/${run.attempted} fully correct${run.attempted<ROUNDS?' \u00b7 time expired':''}</small></div><span class="run-score">${run.score}/${run.mode==='boss'?18:15}</span></summary><div class="journal-body">${qmarkup||'<p class="journal-warning">This earlier version recorded the score but not the individual questions.</p>'}</div></details>`;
- }).join('');
- return `<section id="reviewJournal" class="journal" aria-label="Review journal across all runs"><div class="journal-title"><h2>Review Journal</h2><span class="journal-count">${journal.length} ANSWERS</span></div>
- <p class="journal-intro">\u2713 Correct \u00b7 ~ Partial credit \u00b7 \u2715 Incorrect. Tap a run to expand it.</p>
- ${groups||'<p class="journal-warning">No questions answered yet.</p>'}
- <div class="journal-actions"><button class="primary" id="journalDownload" type="button">\u2193 Download full review PDF</button><button class="secondary" id="journalOpen" type="button">Open PDF</button><button class="secondary" id="journalPrint" type="button">Print review</button></div>
- <p class="journal-intro">Saved only on this device. Export before clearing browser data or starting a new student.</p></section>`;
-}
-function paintReviewGraphs(root=main){
- for(const cv of root.querySelectorAll('.review-graph')){
-  const row=session.journal?.[Number(cv.dataset.journalIndex)];
-  if(row?.graph && cv.getBoundingClientRect().width>=80)renderGraph(cv,row.graph,1,0,0);
- }
-}
-function bindJournal(){
- for(const el of main.querySelectorAll('.journal-run'))el.addEventListener('toggle',()=>{if(el.open)paintReviewGraphs(el);});
- paintReviewGraphs();
- const download=$('journalDownload'),open=$('journalOpen'),print=$('journalPrint');
- if(download)download.addEventListener('click',()=>journalPDFAction(false));
- if(open)open.addEventListener('click',()=>journalPDFAction(true));
- if(print)print.addEventListener('click',()=>{fillJournalPrint();requestAnimationFrame(()=>requestAnimationFrame(()=>window.print()));});
-}
-function fillJournalPrint(){
- const runs=session.history||[],journal=session.journal||[],groups=runs.map((run,i)=>{
- const qs=journal.filter(q=>q.run===i+1).map(a=>`<div class="report-question"><b>Q${a.round} \u00b7 ${esc(a.category||a.topic)} \u00b7 ${a.correct?'Correct':a.points?'Partial':'Incorrect'} (${a.points}/${a.possible})</b><div>${esc(a.prompt||'')}</div><div>${esc(stripTags(a.equation||''))}</div><div>${esc(a.desc||'')}</div><div><b>Submitted:</b> ${esc(a.response||'')}</div><div><b>Correct:</b> ${esc(a.correctAnswer||'Not available')}</div></div>`).join('');
- return `<h2>Run ${i+1} \u00b7 ${run.mode==='boss'?'Boss':'Standard'} \u00b7 ${run.score}/${run.mode==='boss'?18:15}</h2>${qs||'<p>Only the run summary was saved in this earlier version.</p>'}`;
- }).join('');
- $('printable').innerHTML=`<h1>FUNCTION LAB \u00b7 REVIEW JOURNAL</h1><div class="print-meta"><b>Student:</b> ${esc(session.name)}<br><b>Best:</b> ${calculateScore()}/15 \u00b7 ${runs.length} runs \u00b7 ${journal.length} answers<br><b>Printed:</b> ${new Date().toLocaleString('en-GB')}</div>${groups||'<p>No answers submitted.</p>'}<p style="font-size:9pt">Private study record saved on this device; the QR contains only a summary.</p>`;
-}
-
 function reviewFlags(){const b=session.clipboard||{},flags=[];
  if((b.copy||0)+(b.paste||0)+(b.cut||0)>0)flags.push('Clipboard');
  if((session.focusLosses||0)>=2)flags.push('Focus');
@@ -2364,8 +2182,8 @@ function qrPayload(){
  const marks=skillTotals().replace('Log','L').replace('Fun','F').replace('Trans','T').replace('Dil','D');
  const all=studentSkillStats().map(x=>`${x.earned}/${x.possible}`).join(',');
  const source=[
- 'FL8',`Name: ${session.name}`,
- `Score: ${calculateScore()}/15; ${best?.mode==='boss'?'Boss':'Standard'}; ${best?.correct||0}/${best?.attempted||0}; Raw: ${rawBestScore()}; Penalty: ${penaltyCount()}`,
+ 'FL5',`Name: ${session.name}`,
+ `Score: ${best?.score||0}/15; ${best?.mode==='boss'?'Boss':'Standard'}; ${best?.correct||0}/${best?.attempted||0}`,
  `Runs: ${h.length}; Best: ${best?.attemptNo||0}; ${trend||'0'}`,
  `Skills: ${marks}`,`All: ${all}`,
  `First: ${h[0]?.pattern||'------'}; Q: ${skillPattern()}`,
@@ -2388,19 +2206,16 @@ function renderResult(){
  if(submitted){clock.hidden=true;$('timerRail').hidden=true;}
  const stats=studentSkillStats(),canRetry=!submitted&&!isExpired();
  const overview=`<div class="results-overview"><div class="metric-result"><span>Your personal best</span><strong id="studentScore">${calculateScore()}<small> / ${MAX_SCORE}</small></strong></div><div class="metric-result"><span>Completed runs</span><strong>${h.length}<small> total</small></strong></div></div>`;
- const penaltyInfo=integrityState(),deductions=penaltyInfo.deductions||0;
- const integrityNote=penaltyInfo.events?`<div class="integrity-note ${deductions?'':'warning-only'}" role="status"><strong>${deductions?'−'+deductions+' MARK'+(deductions===1?'':'S')+' · THIS RUN':'FIRST WARNING · THIS RUN'}</strong>${deductions?`This run: −${deductions}. Personal best: <b>${calculateScore()}/15</b>.`:'The next clipboard attempt or quiz exit in this run costs one mark.'}<br><small>Device and browser interruptions are review indicators, not proof of misconduct.</small></div>`:'';
  const latestNote=latest?`<div class="run-news">${best?.attemptNo===h.length?'✦ NEW HIGH SCORE':'↻ RUN '+h.length} <b>${latest.score}/15</b> ${latest.mode==='boss'?'· BOSS':''}</div>`:'';
  const bossGate= session.bossUnlocked?
   `<section class="boss-gate unlocked" aria-label="Boss Run unlocked"><div class="boss-emblem" aria-hidden="true">✦</div><div class="boss-gate-copy"><b>BOSS RUN UNLOCKED</b><small>6 hard questions · up to 18/15</small></div><button class="primary bossbtn" id="retryBoss" type="button">ENTER BOSS RUN →</button></section>`:
-  `<section class="boss-gate locked" aria-label="Boss Run locked"><div class="boss-emblem" aria-hidden="true">◆</div><div class="boss-gate-copy"><b>BOSS RUN · LOCKED</b><small>Reach 13/15 on a Standard run</small><div class="boss-progress"><i style="width:${Math.min(100,100*calculateScore()/13)}%"></i></div></div></section>`;
+  `<section class="boss-gate locked" aria-label="Boss Run locked"><div class="boss-emblem" aria-hidden="true">◆</div><div class="boss-gate-copy"><b>BOSS RUN · LOCKED</b><small>Reach 15/15 to unlock</small><div class="boss-progress"><i style="width:${Math.min(100,100*calculateScore()/15)}%"></i></div></div></section>`;
  const playButtons=canRetry?`<div class="run-control" aria-label="Choose your next action">${bossGate}<button class="primary replaybtn" id="retryStandard" type="button">↻ PLAY AGAIN <span>Standard · 6 questions</span></button><button class="secondary submitbest" id="finalSubmit" type="button">Finish &amp; show QR →</button></div>`:'';
  setView(`<article class="surface"><div class="result-wrap"><div class="resulttitle">
  <div class="eyebrow">${submitted?(session.timedOut?'TIME UP · AUTO-SUBMITTED':'SUBMITTED'):'RUN CLEARED · KEEP CLIMBING'}</div>
  <h1>${submitted?'Session complete':'Run complete'}</h1><p>${esc(session.name)} · ${submitted?'your high score is locked in':'your best mark counts'}</p></div>
  ${overview}${gradeDisplay()}${best?.mode==='boss'?'<div style="text-align:center"><span class="finish-tag">BOSS BONUS · 18/15 POSSIBLE</span></div>':''}
- ${latestNote}${integrityNote}${playButtons}
- ${journalMarkup()}
+ ${latestNote}${playButtons}
  ${best?studentSkillsMarkup(stats):''}
  ${attemptTrendMarkup()}
  ${submitted?`<a class="verify-jump" href="#qrVerify">Teacher verification QR ↓</a>
@@ -2418,7 +2233,6 @@ function renderResult(){
  <button class="restart" id="newStudent" type="button">New student / new session on this device</button>`:
  `<p class="tinyhint">${formatTime(DURATION-activeElapsed())} left · one shared timer for every run</p>`}
  </div></article>`);
- bindJournal();
  if(submitted){
   try{qrMatrix=makeQR(qrPayload());paintQR($('resultQR'),qrMatrix,4);}catch(err){console.error(err);$('resultQR').hidden=true;showToast('QR unavailable. Copy the full result text or save the PDF.');}
   $('saveQR').addEventListener('click',saveQRCard);
@@ -2540,7 +2354,7 @@ function pdfAction(open){
 // Clipboard protection is a friction measure, not a browser security boundary.
 function note(kind){if(!sessionOpen())return;const t=Date.now();if(lastClipboard.type===kind&&t-lastClipboard.when<420)return;
  session.clipboard=session.clipboard||{copy:0,paste:0,cut:0,menu:0};session.clipboard[kind]=(session.clipboard[kind]||0)+1;
- lastClipboard={type:kind,when:t};integrityEvent(kind);saveSession();}
+ lastClipboard={type:kind,when:t};saveSession();}
 for(const kind of ['copy','paste','cut'])document.addEventListener(kind,e=>{if(!quizActive())return;e.preventDefault();note(kind);},true);
 document.addEventListener('beforeinput',e=>{if(!quizActive())return;
  if(e.inputType==='insertFromPaste'||e.inputType==='insertFromDrop'){e.preventDefault();note('paste');}},true);
@@ -2551,13 +2365,13 @@ document.addEventListener('dragstart',e=>{if(quizActive())e.preventDefault();},t
 document.addEventListener('drop',e=>{if(!quizActive())return;e.preventDefault();note('paste');},true);
 window.addEventListener('blur',()=>{clearTimeout(focusDebounce);focusDebounce=setTimeout(()=>{
  if(sessionOpen()&&!document.hasFocus())beginPause('Window lost focus');},500);});
-window.addEventListener('focus',()=>{clearTimeout(focusDebounce);if(!session?.pausedAt)keepScreenAwake();});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)beginPause('Tab or app hidden');else if(!session?.pausedAt)keepScreenAwake();});
+window.addEventListener('focus',()=>clearTimeout(focusDebounce));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)beginPause('Tab or app hidden');});
 window.addEventListener('pagehide',()=>{if(sessionOpen())beginPause('Page left');});
 $('resumeBtn').addEventListener('click',resumeQuiz);
 // Reload recovery preserves the question, timer, event counts, and pause state.
 session=loadSession();
-if(session){migrateJournal();if(session.finishedAt)renderResult();else{
+if(session){if(session.finishedAt)renderResult();else{
  session.reloads=(session.reloads||0)+1;
  if(!session.pausedAt)session.pausedAt=Date.now();
  saveSession();if(isExpired())finish(true);else if(session.phase==='running')renderQuestion();else renderResult();

@@ -57,7 +57,7 @@ function functionLabTrySecondDecoder(){
  <div class="separator">Backup scan options</div>
  <label class="upload" id="dropzone">Upload / drop a QR screenshot<input id="imageUpload" type="file" accept="image/*" aria-label="Upload a QR image"></label>
  <label class="field-label" for="rawCode">Paste readable QR text (works with no webcam)</label>
- <textarea class="pastearea" id="rawCode" spellcheck="false" placeholder="FL6&#10;Name: ...&#10;Score: ..." aria-label="Readable QR result text"></textarea>
+ <textarea class="pastearea" id="rawCode" spellcheck="false" placeholder="FL5&#10;Name: ...&#10;Score: ..." aria-label="Readable QR result text"></textarea>
  <div class="buttonrow"><button class="btn primary" id="addManual">Record pasted result</button><button class="btn" id="clearInput">Clear</button></div>
  <p class="hintline">Webcam access needs HTTPS (GitHub Pages qualifies) and camera permission. Camera and photo scanning try the built-in QR detector first, then jsQR from one of two pinned public CDNs. No student image or data is uploaded. On a local file, use localhost or GitHub Pages HTTPS for camera permissions.</p>
  </section>
@@ -72,7 +72,7 @@ function functionLabTrySecondDecoder(){
  <div class="tablewrap"><table class="roster"><thead><tr><th>Name</th><th>Best mark</th><th>Runs</th><th>Answered</th><th>Correct</th><th>Indicators</th><th>Scanned</th><th>Details</th></tr></thead><tbody id="rows"><tr><td colspan="8">No students checked in yet.</td></tr></tbody></table></div>
  <p class="tiny">The teacher dashboard is not linked from the student quiz. Keep this page on your own device. Records stay in this browser's local storage; export CSV or backup JSON before switching computers or clearing browser data.</p>
 </section>
-<p class="foot">Diagnostic interpretation: FL5/FL6/FL7 records aggregate all answered questions across every run; earlier records show the best-run snapshot. Boss runs use challenge-level questions throughout. The radar is a classroom diagnostic, not a definitive measure of competence. Quiz code is client-generated and is not a cryptographically authenticated grade.</p>
+<p class="foot">Diagnostic interpretation: new FL5 records aggregate all answered questions across every run; earlier records show the best-run snapshot. Boss runs use challenge-level questions throughout. The radar is a classroom diagnostic, not a definitive measure of competence. Quiz code is client-generated and is not a cryptographically authenticated grade.</p>
 <canvas id="frame" width="960" height="720" hidden></canvas>
 </main>
 <script>
@@ -100,11 +100,6 @@ function evidenceAnswers(pattern){return Array.from(pattern,(character,i)=>{
  const n=Number(character),level=n%3,correct=n>=3,possible=level+1;
  return{topic:TOPICS[i],answered:true,correct,possible,earned:correct?possible:0,level:['Foundation','Application','Challenge'][level]};
 });}
-// v2.6: credit-aware evidence. Digits 0-8 encode level and partial marks.
-function evidenceAnswersV6(pattern){const table=[[0,0],[0,1],[1,0],[1,1],[1,2],[2,0],[2,1],[2,2],[2,3]];
- return Array.from(pattern,(ch,i)=>{if(ch==='-')return{topic:TOPICS[i],answered:false,correct:false,possible:0,earned:0,level:'Not reached'};
- const pair=table[Number(ch)];if(!pair)throw Error('Invalid partial-credit evidence.');const [lv,earned]=pair,possible=lv+1;
- return{topic:TOPICS[i],answered:true,correct:earned===possible,possible,earned,level:['Foundation','Application','Challenge'][lv]};});}
 function expectedSkills(answers){const groups=[['Log',[0]],['Fun',[1]],['Trans',[2,3]],['Dil',[4,5]]];
  return groups.map(([label,ids])=>{const q=ids.map(i=>answers[i]);return `${label}${q.reduce((a,b)=>a+b.earned,0)}/${q.reduce((a,b)=>a+b.possible,0)}`;}).join(' ');}
 function reviewExpected(t){const flags=[];
@@ -163,39 +158,37 @@ function parseV3Record(raw){
 }
 function parseV4Record(raw){
  const value=String(raw||'').trim().replace(/\r\n?/g,'\n');
- const isV8=value.startsWith('FL8\n'),isV7=value.startsWith('FL7\n'),isV6=value.startsWith('FL6\n'),isV5=value.startsWith('FL5\n'),isCumulative=isV5||isV6||isV7||isV8;
- if(value.length>1200||!(isCumulative||value.startsWith('FL4\n')))throw Error('Not a Function Lab QR.');
- const lines=value.split('\n');if(lines.length!==(isCumulative?12:11))throw Error('Incomplete Function Lab QR.');
+ const isV5=value.startsWith('FL5\n');
+ if(value.length>1200||!(isV5||value.startsWith('FL4\n')))throw Error('Not a Function Lab QR.');
+ const lines=value.split('\n');if(lines.length!==(isV5?12:11))throw Error('Incomplete Function Lab QR.');
  const tail=lines.pop(),match=tail.match(/^Check: ([0-9A-F]{8})$/);
  if(!match||checksum(lines.join('\n'))!==match[1])throw Error('QR checksum mismatch. Scan the original code.');
  const fields={};for(const line of lines.slice(1)){const n=line.indexOf(': ');if(n<1)throw Error('Unreadable result field.');
   const key=line.slice(0,n);if(key in fields)throw Error('Duplicate result field.');fields[key]=line.slice(n+2);}
- const expected=['Name','Score','Runs','Skills','First','Focus','Copy','Review','ID',...(isCumulative?['All']:[])];
+ const expected=['Name','Score','Runs','Skills','First','Focus','Copy','Review','ID',...(isV5?['All']:[])];
  if(expected.some(k=>!(k in fields))||Object.keys(fields).length!==expected.length)throw Error('QR fields missing or extra.');
  const name=fields.Name;if(!name.trim()||name.length>64||/[\x00-\x1f]/.test(name))throw Error('Invalid student name.');
  const id=fields.ID;if(!/^[0-9a-z]{7}$/.test(id))throw Error('Invalid submission ID.');
- const sc=fields.Score.match((isV7||isV8)?/^(\d+)\/15; (Standard|Boss); (\d+)\/(\d+); Raw: (\d+); Penalty: (\d+)$/:/^(\d+)\/15; (Standard|Boss); (\d+)\/(\d+)$/);
- const qp=fields.First.match((isV6||isV7||isV8)?/^([0-8-]{6}); Q: ([0-8-]{6})$/:/^([0-5-]{6}); Q: ([0-5-]{6})$/);
+ const sc=fields.Score.match(/^(\d+)\/15; (Standard|Boss); (\d+)\/(\d+)$/);
+ const qp=fields.First.match(/^([0-5-]{6}); Q: ([0-5-]{6})$/);
  if(!sc||!qp)throw Error('Invalid score or skill evidence.');
  const pattern=qp[2],firstPattern=qp[1],mode=sc[2].toLowerCase();
- const decoder=(isV6||isV7||isV8)?evidenceAnswersV6:evidenceAnswers;
- const answers=decoder(pattern),rawScore=answers.reduce((n,a)=>n+a.earned,0),correct=answers.filter(a=>a.correct).length,attempted=answers.filter(a=>a.answered).length;
- const penalties=(isV7||isV8)?Number(sc[6]):0,score=(isV7||isV8)?Math.max(0,rawScore-penalties):rawScore;
- if(((isV7||isV8)&&(Number(sc[5])!==rawScore||!Number.isSafeInteger(penalties)||penalties<0))||score!==Number(sc[1])||correct!==Number(sc[3])||attempted!==Number(sc[4]))throw Error('Score, deductions and question evidence disagree.');
+ const answers=evidenceAnswers(pattern),score=answers.reduce((n,a)=>n+a.earned,0),correct=answers.filter(a=>a.correct).length,attempted=answers.filter(a=>a.answered).length;
+ if(score!==Number(sc[1])||correct!==Number(sc[3])||attempted!==Number(sc[4]))throw Error('Score and question evidence disagree.');
  if(mode==='boss'&&answers.some(a=>a.answered&&a.possible!==3))throw Error('Boss questions must be challenge level.');
- if(mode==='standard'&&rawScore>15)throw Error('Standard score exceeds 15.');
+ if(mode==='standard'&&score>15)throw Error('Standard score exceeds 15.');
  if(fields.Skills!==expectedSkills(answers).replace('Log','L').replace('Fun','F').replace('Trans','T').replace('Dil','D'))throw Error('Skill breakdown disagrees with question evidence.');
  const runs=fields.Runs.match(/^(\d+); Best: (\d+); ([\d,]+)$/);
  if(!runs)throw Error('Invalid attempt-history record.');
  const runCount=Number(runs[1]),bestAttempt=Number(runs[2]),trend=runs[3].split(',').map(Number);
  if(!Number.isSafeInteger(runCount)||runCount<0||runCount>500||bestAttempt<0||bestAttempt>runCount||trend.length!==Math.min(12,Math.max(runCount,1))||trend.some(v=>!Number.isSafeInteger(v)||v<0||v>18))throw Error('Invalid run count or trend.');
- if(runCount===0){if(rawScore||bestAttempt||firstPattern!=='------'||attempted)throw Error('Empty session mismatches.');}
+ if(runCount===0){if(score||bestAttempt||firstPattern!=='------'||attempted)throw Error('Empty session mismatches.');}
  else{
   if(!bestAttempt)throw Error('Missing best-run index.');
-  if(runCount<=12){if((isV8?score:rawScore)!==Math.max(...trend)||trend[bestAttempt-1] !== (isV8?score:rawScore))throw Error('Best run and trend disagree.');
-   if((!isV8&&decoder(firstPattern).reduce((n,a)=>n+a.earned,0)!==trend[0])||(isV8&&decoder(firstPattern).reduce((n,a)=>n+a.earned,0)<trend[0]))throw Error('First-run evidence disagrees with trend.');}
-  else if(bestAttempt>runCount-12&&trend[bestAttempt-(runCount-12)-1] !== (isV8?score:rawScore))throw Error('Best run disagrees with recent trend.');
-  if(trend.some(n=>n>(isV8?score:rawScore)))throw Error('Recent run exceeds claimed best.');
+  if(runCount<=12){if(score!==Math.max(...trend)||trend[bestAttempt-1]!==score)throw Error('Best run and trend disagree.');
+   if(evidenceAnswers(firstPattern).reduce((n,a)=>n+a.earned,0)!==trend[0])throw Error('First-run evidence disagrees with trend.');}
+  else if(bestAttempt>runCount-12&&trend[bestAttempt-(runCount-12)-1]!==score)throw Error('Best run disagrees with recent trend.');
+  if(trend.some(n=>n>score))throw Error('Recent run exceeds claimed best.');
  }
  const focus=fields.Focus.match(/^(\d+); Pause: (\d+)s; Active: (\d+)s$/);
  const clip=fields.Copy.match(/^(\d+) Paste: (\d+) Cut: (\d+) Menu: (\d+) Reload: (\d+)$/);
@@ -203,12 +196,10 @@ function parseV4Record(raw){
  const nums=[...focus.slice(1),...clip.slice(1)].map(Number);
  if(nums.some(n=>!Number.isSafeInteger(n)||n<0||n>10000000))throw Error('Invalid telemetry count.');
  const telemetry={focusLosses:nums[0],pausedSeconds:nums[1],activeSeconds:nums[2],copy:nums[3],paste:nums[4],cut:nums[5],menu:nums[6],reloads:nums[7]};
- if(isV7||isV8){const eligibleEvents=telemetry.focusLosses+telemetry.copy+telemetry.paste+telemetry.cut;
-  if((isV7&&penalties!==Math.max(0,eligibleEvents-1))||(isV8&&penalties>Math.max(0,eligibleEvents-1)))throw Error('Reported deductions exceed the recorded interruption and clipboard attempts.');}
- if(telemetry.activeSeconds>((isCumulative)?901:1201))throw Error('Active time exceeds the session limit.');
+ if(telemetry.activeSeconds>(isV5?901:1201))throw Error('Active time exceeds the session limit.');
  const review=reviewExpected(telemetry);if(fields.Review!==review)throw Error('Review indicators disagree with telemetry.');
  let cumulative=null;
- if(isCumulative){
+ if(isV5){
   const values=fields.All.split(',');
   if(values.length!==4||values.some(v=>!/^\d+\/\d+$/.test(v)))throw Error('Invalid cumulative skill evidence.');
   const bestStats=categoryStats({answers});
@@ -219,11 +210,11 @@ function parseV4Record(raw){
   const total=cumulative.reduce((n,v)=>n+v.possible,0);
   if(total>18*runCount||!!total!==!!runCount)throw Error('Cumulative marks and run count disagree.');
  }
- return{version:isV8?'FL8':isV7?'FL7':isV6?'FL6':isV5?'FL5':'FL4',id,name,score,rawScore,penalties,warningUsed:(isV7||isV8)&&(telemetry.focusLosses+telemetry.copy+telemetry.paste+telemetry.cut)>0,mode,pattern,answers,attempted,correct,telemetry,review,runCount,bestAttempt,firstPattern,
+ return{version:isV5?'FL5':'FL4',id,name,score,mode,pattern,answers,attempted,correct,telemetry,review,runCount,bestAttempt,firstPattern,
   cumulative,trend,gradeSource:'May 2025 TZ3 +8pp',ibGrade:gradeFromScore(score),trendOffset:runCount-trend.length,raw:value,scannedAt:new Date().toISOString()};
 }
 function parseRecord(raw){
- if(/^FL[45678]\n/.test(String(raw||'').trim()))return parseV4Record(raw);
+ if(/^FL[45]\n/.test(String(raw||'').trim()))return parseV4Record(raw);
  if(String(raw||'').trim().startsWith('FUNCTION LAB v3\n'))return parseV3Record(raw);
  const value=String(raw||'').trim().replace(/\r\n?/g,'\n');
  if(value.startsWith('FL1|'))return parseLegacyRecord(value);
@@ -332,7 +323,6 @@ function renderSelected(){
  const list=stats.map(s=>`<div class="skill"><strong>${s.name}</strong><small>${s.possible?`${s.earned}/${s.possible} marks${r.cumulative?' · all runs':` · ${s.attempted} question${s.attempted===1?'':'s'}`}`:'Not assessed'}</small><div class="bar"><span style="width:${s.pct||0}%"></span></div></div>`).join('');
  const rows=r.answers.map(a=>`<tr><td>${esc(a.topic)}</td><td>${a.answered?esc(a.level):'—'}</td><td>${a.answered?`${a.earned} / ${a.possible}`:'Not reached'}</td></tr>`).join('');
  box.innerHTML=`<div class="selected-top"><div><h3>${esc(r.name)}</h3><p class="submeta">Submission ${esc(r.id.toUpperCase())} · ${esc(new Date(r.scannedAt).toLocaleString('en-GB'))}<br>${r.attempted} answered · ${r.correct} correct · ${r.runCount||1} run${(r.runCount||1)===1?'':'s'}</p></div><div class="score">${r.score}<small> / 15</small>${r.mode==='boss'?'<span class="boss-tag">Boss</span>':''}</div></div>
- ${r.penalties?`<div class="review-indicator" style="background:#fff0e7;border-color:#e8ac94;color:#812d23"><strong>−${r.penalties} MARK${r.penalties===1?'':'S'} DEDUCTED</strong><p>Raw best ${r.rawScore}; one global warning; adjusted final ${r.score}/15. Browser focus events can be caused by phone interruptions and should be reviewed.</p></div>`:r.warningUsed?'<div class="review-indicator" style="background:#fff9e9"><strong>ONE WARNING USED</strong><p>No marks deducted.</p></div>':''}
  <div class="teacher-grade" aria-label="Adjusted classroom grade ${gradeFromScore(r.score)} (May 2025 TZ3 plus eight percentage points)">
  <div class="teacher-grade-wax"><span>${gradeFromScore(r.score)}</span></div>
  <div><b>${gradeFromScore(r.score)==='7+'?'7+ · Boss achievement':'Estimated classroom grade '+gradeFromScore(r.score)+'/7'}</b><small>AA SL · M25 TZ3 adjusted +8 percentage points${gradeFromScore(r.score)==='7+'?' · Bonus above 100%':''}. Not an official IB grade.</small></div></div>
@@ -341,7 +331,7 @@ function renderSelected(){
  <div class="telemetry-grid">${[
  ['Focus losses',r.telemetry.focusLosses],['Paused',r.telemetry.pausedSeconds+'s'],['Active',r.telemetry.activeSeconds+'s'],
  ['Copy attempts',r.telemetry.copy],['Paste attempts',r.telemetry.paste],['Cut attempts',r.telemetry.cut],
- ['Context menus',r.telemetry.menu],['Page reloads',r.telemetry.reloads],['Mark deductions',r.penalties||0]
+ ['Context menus',r.telemetry.menu],['Page reloads',r.telemetry.reloads]
  ].map(([label,value])=>`<div class="telemetry-cell"><b>${esc(value)}</b><span>${esc(label)}</span></div>`).join('')}</div>
  ${teacherTrend(r)}
  <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.10em;color:#53767a;margin:23px 0 0">${r.cumulative?'SKILL MAP · ALL RUNS':'BEST-RUN SKILLS'}</h3>${radarSVG(stats)}<div class="skill-list">${list}</div>
@@ -365,8 +355,8 @@ function renderAll(){
 }
 function blobDownload(content,mime,filename){const url=URL.createObjectURL(new Blob([content],{type:mime})),a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),25000);}
 function csvCell(value){const s=String(value??''),safe=/^[=+@\-\t\r]/.test(s)?"'"+s:s;return '"'+safe.replace(/"/g,'""')+'"';}
-function exportCSV(){const header=['Student','Final score','Raw personal best','Deductions','Global warning used','Adjusted classroom grade (M25 TZ3 +8pp)','Baseline','Mode','Runs','Best run','Recent trend','First pattern','Answered','Correct','Log earned','Log possible','Functions earned','Functions possible','Translations earned','Translations possible','Dilations earned','Dilations possible','Focus losses','Paused seconds','Active seconds','Copy attempts','Paste attempts','Cut attempts','Context menus','Reloads','Review flags','Session ID','Scanned at'];
- const lines=[header.map(csvCell).join(',')];for(const r of [...records].reverse()){const stats=categoryStats(r);lines.push([r.name,r.score,r.rawScore??r.score,r.penalties||0,r.warningUsed?'Yes':'No',gradeFromScore(r.score),15,r.mode||'standard',r.runCount||1,r.bestAttempt||1,(r.trend||[r.score]).join(' > '),r.firstPattern||'',r.attempted,r.correct,...stats.flatMap(s=>[s.earned,s.possible]),r.telemetry.focusLosses,r.telemetry.pausedSeconds,
+function exportCSV(){const header=['Student','Best score','Adjusted classroom grade (M25 TZ3 +8pp)','Baseline','Mode','Runs','Best run','Recent trend','First pattern','Answered','Correct','Log earned','Log possible','Functions earned','Functions possible','Translations earned','Translations possible','Dilations earned','Dilations possible','Focus losses','Paused seconds','Active seconds','Copy attempts','Paste attempts','Cut attempts','Context menus','Reloads','Review flags','Session ID','Scanned at'];
+ const lines=[header.map(csvCell).join(',')];for(const r of [...records].reverse()){const stats=categoryStats(r);lines.push([r.name,r.score,gradeFromScore(r.score),15,r.mode||'standard',r.runCount||1,r.bestAttempt||1,(r.trend||[r.score]).join(' > '),r.firstPattern||'',r.attempted,r.correct,...stats.flatMap(s=>[s.earned,s.possible]),r.telemetry.focusLosses,r.telemetry.pausedSeconds,
  r.telemetry.activeSeconds,r.telemetry.copy,r.telemetry.paste,r.telemetry.cut,r.telemetry.menu,r.telemetry.reloads,r.review,r.id,r.scannedAt].map(csvCell).join(','));}
  blobDownload('\uFEFF'+lines.join('\r\n'),'text/csv;charset=utf-8','function-lab-class-'+new Date().toISOString().slice(0,10)+'.csv');}
 function exportJSON(){blobDownload(JSON.stringify({type:'function-lab-teacher-v2',exportedAt:new Date().toISOString(),records:records.map(r=>({raw:r.raw,scannedAt:r.scannedAt}))},null,2),'application/json','function-lab-backup-'+new Date().toISOString().slice(0,10)+'.json');}
