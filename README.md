@@ -1,78 +1,63 @@
-# Function Lab 2.4 — IB Mathematics AA SL
+# Function Lab v2.5 — Mathematics AA SL
 
-Mobile-first six-question adaptive mathematics game with one **20-minute active-time session**. Includes a teacher check-in dashboard for GitHub Pages.
+Mobile-first, serverless, 15-minute adaptive quiz with unlimited retries during one session, cumulative skills radar, Boss Run unlock, wax-seal classroom grade, and teacher QR check-in. Designed for deployment on GitHub Pages.
 
-**[Play Function Lab (student quiz)](https://rktrobinhood.github.io/math-materials/)** · **[Open the teacher dashboard](https://rktrobinhood.github.io/math-materials/teacher.html)** · [View the GitHub repository](https://github.com/RktRobinhood/math-materials)
+## Deploy in two minutes
 
-## Quick deployment
+1. Upload all files in this directory to your GitHub Pages repository root. **If upgrading, replace BOTH `index.html` and `teacher.html`: v2.5 uses the new `FL5` QR format.** Keep `README.md`, `LICENSES.md`, and `APACHE-2.0.txt` if you publish the whole package.
+2. In GitHub, enable **Settings > Pages > Deploy from branch > main > /(root)**, or keep your existing Pages configuration.
+3. Give students `https://USERNAME.github.io/REPOSITORY/` and open `https://USERNAME.github.io/REPOSITORY/teacher.html` on your own computer.
+4. On the teacher page, click **Check scanner setup**. Allow webcam permissions (HTTPS required), then scan a test phone. If scanning fails, upload a screenshot or paste the fallback QR text.
+5. Export CSV or backup JSON before clearing your browser, using a different teacher computer, or closing the grading session. **The class roster is stored locally in the teacher browser**, not in a shared database.
 
-1. Upload **all the files in this folder** (especially `index.html` and `teacher.html`) to the root of your [GitHub repository](https://github.com/RktRobinhood/math-materials). If replacing v2.3, replace **both** HTML files, because the QR payload is now the shorter `FL4` format.
-2. In the repository, open **Settings → Pages → Deploy from a branch → main / (root)**. Wait until the GitHub Pages URL is live.
-3. Share the **[student quiz](https://rktrobinhood.github.io/math-materials/)** with students.
-4. Open the **[teacher dashboard](https://rktrobinhood.github.io/math-materials/teacher.html)** on your computer. Select **Check scanner setup**, allow webcam access, and scan one test submission. If scanning fails, use a screenshot or paste the plain-text QR record.
-5. **Export the teacher CSV or backup JSON before closing/clearing the browser data.** Scores are stored locally in the teacher browser, not on a server.
+## How the game works
 
-## What students see
+- **One 15-minute active-time clock across every run**, not 15 minutes per run. The thin top bar visualizes remaining time. The clock still *pauses when the quiz loses focus*, as previously requested, and records interruptions for teacher review. It continues between runs and while viewing results. At zero, the app **automatically submits** and displays the final score and QR—even during an unfinished attempt. If no questions have been answered, it submits 0/15.
+- Standard runs have **6 shuffled randomized questions**: log laws, function reconstruction, horizontal/vertical translation, and horizontal/vertical dilation. Each question requires five active seconds of inspection, then **one tap** to submit. A fully correct Standard run earns 15/15.
+- **Personal best is never lowered** by a worse retry. The stored name, completed runs, partial timed-out run, best-run answer evidence, and 15-minute timer persist locally on the same browser/device. A partial final attempt contributes whatever questions were answered, and may improve the personal best.
+- A Standard score of at least 13/15 unlocks **Boss Run**. Given this version's exact adaptive scoring, that threshold is effectively **15/15**. Boss Run offers six hard questions worth three marks each: up to **18/15**. The result page prominently displays the locked/unlocked Boss gate and an oversized **PLAY AGAIN** button.
+- The four-skill spider chart is now **cumulative across ALL completed or partially timed-out runs**. Each answered question contributes its earned marks and offered marks to the relevant subject area; challenge questions carry more marks. The chart updates after each run. Exact category totals and question counts appear below it, along with a compact strongest/next-focus suggestion. This is diagnostic evidence, not a precise standardized ability estimate.
+- Graphs retain the translucent grid and axes, **Reset view**, zoom controls, and touch-safe navigation. Phone swipes **scroll the page by default**; **Explore graph** enables touch panning/pinch zoom until students tap **Done · scroll page**.
+- Students see their score, the four-skill radar, progress trend, and an original wax-seal grade. The final screen supplies the teacher QR, a PDF of the best-run answers, an independently saved QR image, print fallback, and readable verification text.
 
-- Six shuffled questions per run, from log laws, function reconstruction, horizontal/vertical translations and dilations, with random numerical values and varying templates.
-- Interactive graph: one-finger drag, pinch zoom with two fingers, plus/minus zoom, **Reset view** to recenter, labelled coordinates and a light mathematical grid.
-- Minimum five active seconds to inspect each question and a two-tap answer lock to discourage accidental guessing.
-- Six-question Standard adaptive runs, worth up to **15** (1 then 2 then four 3-mark questions for a perfect route).
-- **Boss Run unlocked after 13/15 or better on a Standard run.** Under this exact progression a Standard score above 12 is 15/15. Boss Run uses six challenge-level questions worth three each, maximum **18/15**.
-- One shared 20-minute active-time budget across all runs; interruption pauses active time and is counted. The name, best score, short attempt history, and session state persist on the same device. The final submit button freezes results and displays a compact QR, printable PDF, and fallback text.
-- Personal-best score /15, correct answer count, four-category skills radar, attempt trend, and **wax-seal estimated IB-style grade out of seven** on the result page. The seal appears before and after final submission. Boss raw marks above 15 are retained for the score, but capped at 100% for the grade estimate.
+## Classroom-adjusted IB-style grade
 
-## Estimated IB-equivalent grade: transparent benchmark
+Basis: **May 2025 IB Mathematics AA SL, Time Zone 3 overall grade boundaries**, with **8 percentage points added to each grade-2 through grade-7 lower cutoff**. This also raises each preceding grade's upper cutoff by 8 points. Grade 1 continues to begin at zero. Values are illustrative classroom benchmarks, **not official IB boundaries or predicted exam grades**.
 
-**Benchmark used: Mathematics: Analysis and Approaches SL, May 2025, Time Zone 3 — overall final grade boundaries (scaled from 0–100).** The complete documented bands are:
+| Grade | Minimum (%) | Marks from 15 |
+|---|---:|---:|
+| 1 | 0 | 0–2 |
+| 2 | 18 | 3–4 |
+| 3 | 29 | 5–6 |
+| 4 | 41 | 7–8 |
+| 5 | 56 | 9–10 |
+| 6 | 70 | 11–12 |
+| 7 | 85 | 13–15 |
+| **7+** | **Above 100** | **16–18**, possible only in Boss Run |
 
-| IB grade | Scaled overall percentage |
-|---|---|
-| 1 | 0–9 |
-| 2 | 10–20 |
-| 3 | 21–32 |
-| 4 | 33–47 |
-| 5 | 48–61 |
-| 6 | 62–76 |
-| 7 | 77–100 |
+The percentage is `round(score / 15 * 100)` for scores up to 15. **7+ is a game achievement, not an additional official IB grade.** The teacher console and PDF use the same grading adjustment.
 
-The app computes `percentage = round(min(best_mark, 15) * 100 / 15)`, then looks up the band. Consequently on this 15-mark quiz:
+Sources for the original May 2025 grade cutoffs (the +8-point adjustment is teacher-defined):
 
-| Best score /15 | Estimated grade |
-|---|---|
-| 0–1 | 1 |
-| 2–3 | 2 |
-| 4 | 3 |
-| 5–7 | 4 |
-| 8–9 | 5 |
-| 10–11 | 6 |
-| 12–15, or 16–18 in Boss Run | 7 |
+- May 2025 Math AA SL TZ3 subject report: https://sufferingrepo.me/IB%20SUBJECT%20REPORTS/Group%205%20-%20Mathematics/AASL/Maths%20AASL%20Subject%20Report%20M25%20TZ3.pdf
+- Grading comparison: https://www.pietromeloni.com/ib-grade-boundaries/maths-aa-sl
 
-**This is an illustrative classroom comparison, not an official IB grade or a defensible forecast.** The short adaptive quiz samples only a small part of the full syllabus and has a different difficulty/weighting profile from an IB examination. Boundaries are session-specific and are used only as a recognizable student-facing benchmark. The wax emblem is original artwork, not the official IB seal.
+## QR and teacher records
 
-Why May 2025? It is a fully documented and cross-checkable complete 1–7 TZ3 table. May 2026 TZ3 *reported* boundary listings currently available to us include grades 3–7, but not a verified complete 1–7 grade range; the game therefore does not mix undocumented or estimated low-grade cutoffs with the 2026 reports.
+**FL5** records contain the student's name, best score (possibly above 15 in Boss Run), correct/attempted best-run count, recent score trend and total run count, best-run level/correctness pattern, first-run pattern, **cumulative four-skill marks** (earned/offered across all runs), focus losses and pause time, active time, clipboard/context-menu/reload attempts, session ID, and checksum. The teacher can reconstruct the best-run evidence separately and render the accumulated radar. FL5 codes remain compact enough for phone cameras; manual text and screenshot import are fallback options.
 
-References:
-- [May 2025 Math AA SL TZ3 subject report](https://sufferingrepo.me/IB%20SUBJECT%20REPORTS/Group%205%20-%20Mathematics/AASL/Maths%20AASL%20Subject%20Report%20M25%20TZ3.pdf)
-- [Session-by-session sourced boundary comparison](https://www.pietromeloni.com/ib-grade-boundaries/maths-aa-sl)
+`teacher.html` continues accepting **FL4, Function Lab v3/v2, and FL1** records. Earlier codes show a *best-run* radar rather than the new all-run map. Older v3 QR records containing a historical grade are validated against their original historical thresholds; the current classroom grade shown on the teacher screen follows the **+8-percentage-point policy**.
 
-## Teacher check-in and QR
+The checksum catches transcription corruption, **not deliberate tampering**. Client-side telemetry is a review indicator, not proof of cheating; no browser-only activity can securely authenticate exam marks. Webcam and screenshot QR decoding may depend on browser-native APIs or an externally hosted library (`jsQR`) if unavailable natively. The scanner does not upload images or results to any service.
 
-The new `FL4` QR is shorter and includes plain-text name, best score /15, Boss/Standard mode, correct/attempted, earned/available marks in four skills, run count, best attempt index, recent score trend (last 12 attempts), first-attempt question summary, best-run question evidence, and counts for focus interruptions, pause duration, active time, copy/paste/cut/context menu and reload events. Teacher scans reconstruct the **same May 2025 TZ3 estimated grade** from the score, and show it as a small wax seal. Grade does not need a redundant QR field.
+## Browser and privacy notes
 
-Teacher mode accepts **FL4 and older Function Lab v3/v2** check-in records. In a serverless/static site, a QR checksum confirms internal data consistency only; it does not cryptographically authenticate a submission or prove that a student's answers were their own.
+- Host on HTTPS (GitHub Pages), not `file://`, for dependable webcam permissions and sharing. A physical device/browser camera test is still necessary.
+- The student session and teacher roster live in **separate localStorage areas on separate devices**; they are not synchronized. Private browsing, clearing site data or switching browsers will lose records.
+- The activity records only aggregate session evidence (focus/clipboard/reload counts, time) and submitted answers needed to verify the best run. No keylogging, location tracking, or server upload.
+- User-facing fields do not prevent a technically skilled student from decoding or altering client-side data. Use the tool for formative checking rather than high-stakes secure examinations.
+- The full regression test report is in `VERIFICATION.md`.
 
-## Technical cautions
+## Run-local integrity deductions (FL8)
 
-- Student and teacher app state is local to a single browser/device. Do not clear browsing data until results have been exported. No account or server synchronizes results.
-- Webcam APIs normally require HTTPS (`github.io` is HTTPS) or localhost. On `file://`, manual entry works but camera scanning and PDF viewing may be inconsistent.
-- A built-in QR decoder is used where available, with two external JavaScript decoder fallbacks. When external resources are blocked and there is no built-in decoder, copy the student's verification text instead.
-- Clipboard protections and focus telemetry are best-effort browser-side review indicators, not proof of misconduct. Students may use other devices or modify client-side code. Do not treat focus changes, pasted content or rapid completion as sufficient evidence of wrongdoing.
-- This package is suitable for classroom trial after one real student-device/browser and teacher-webcam smoke test. Automated Chromium touch simulations cannot guarantee iOS Safari behavior or camera hardware support.
-
-## Package
-
-- [`index.html`](index.html) — full bundled student quiz (self-contained HTML/CSS/JS including a UTF-8-aware QR encoder)
-- [`teacher.html`](teacher.html) — teacher webcam/screenshot/manual check-in, radar and trend, CSV and JSON exports
-- [`VERIFICATION.md`](VERIFICATION.md) — QA record and caveats
-- [`LICENSES.md`](LICENSES.md), [`APACHE-2.0.txt`](APACHE-2.0.txt) — notices for bundled QR code library
+Each Standard or Boss run starts with one warning. Subsequent focus-loss or clipboard attempts during that run deduct one mark each from that run only, with a floor of zero. A retry starts with a fresh warning. The session keeps its cumulative telemetry and the highest net score from any completed run. The QR uses FL8 so the teacher can validate the best run deductions separately from aggregate telemetry.

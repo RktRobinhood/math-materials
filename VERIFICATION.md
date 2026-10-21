@@ -33,3 +33,7 @@
 **Student / logistics critic (self-audit): 9/10.** Boss unlock and replay are high-contrast, near the top of results; one-tap answers, mobile scrolling, visible timer, autosave, and multiple submission fallbacks remain. **Limitations:** practical webcam permissions and all device-specific touch behavior cannot be certified without a physical classroom smoke test.
 
 Neither critic score represents an external independent review. Automated tests cannot guarantee all devices or network conditions.
+
+## Run-local penalties: additional verification
+
+Chromium test: a 15/15 raw attempt with two deductions recorded 13/15 net, unlocked Boss Run, and a following clean 15/15 attempt retained 15/15 as the personal best. The FL8 payload parsed successfully in the teacher dashboard and retained the trend [13, 15]. This does not certify physical mobile camera or Safari operation.
