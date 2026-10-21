@@ -1,30 +1,22 @@
-# Function Lab 2.4.2 — IB Mathematics AA SL
+# Function Lab 2.4 — IB Mathematics AA SL
 
 Mobile-first six-question adaptive mathematics game with one **20-minute active-time session**. Includes a teacher check-in dashboard for GitHub Pages.
 
+**[Play Function Lab (student quiz)](https://rktrobinhood.github.io/math-materials/)** · **[Open the teacher dashboard](https://rktrobinhood.github.io/math-materials/teacher.html)** · [View the GitHub repository](https://github.com/RktRobinhood/math-materials)
+
 ## Quick deployment
 
-1. Upload **all the files in this folder** (especially `index.html` and `teacher.html`) to the root of your GitHub Pages repository. If replacing v2.3, replace **both** HTML files, because the QR payload is now the shorter `FL4` format.
-2. GitHub repo → Settings → Pages → Deploy from a branch → main / (root). Wait until the GitHub Pages URL is live.
-3. Share your site root (`https://USERNAME.github.io/REPOSITORY/`) with students.
-4. Open `https://USERNAME.github.io/REPOSITORY/teacher.html` on your computer. Select **Check scanner setup**, allow webcam access, and scan one test submission. If scanning fails, use a screenshot or paste the plain-text QR record.
+1. Upload **all the files in this folder** (especially `index.html` and `teacher.html`) to the root of your [GitHub repository](https://github.com/RktRobinhood/math-materials). If replacing v2.3, replace **both** HTML files, because the QR payload is now the shorter `FL4` format.
+2. In the repository, open **Settings → Pages → Deploy from a branch → main / (root)**. Wait until the GitHub Pages URL is live.
+3. Share the **[student quiz](https://rktrobinhood.github.io/math-materials/)** with students.
+4. Open the **[teacher dashboard](https://rktrobinhood.github.io/math-materials/teacher.html)** on your computer. Select **Check scanner setup**, allow webcam access, and scan one test submission. If scanning fails, use a screenshot or paste the plain-text QR record.
 5. **Export the teacher CSV or backup JSON before closing/clearing the browser data.** Scores are stored locally in the teacher browser, not on a server.
-
-## Change in v2.4.2 — mobile scroll safety
-
-**Phone and tablet: swipe across the graph to scroll the page normally.** The graph no longer captures every touch. Select **Explore graph** to temporarily enable one-finger panning (horizontal and vertical) and two-finger pinch-to-zoom. Select **Done · scroll page** either above or overlaid at the bottom of the graph to return to normal scrolling. Zoom buttons and **Reset view** always work; the graph centre is bounded to avoid becoming lost.
-
-Desktop mouse dragging, keyboard graph controls, question content, timing, scores, grade seal, QR format, receipts and teacher dashboard are unchanged. **Upgrading from v2.4.1 requires replacing only `index.html`.** The website is best tested over HTTPS via GitHub Pages.
-
-## Change in v2.4.1
-
-Answer submission now requires **one tap** after the existing five-second inspection period. The previous tap-again confirmation is removed. All other gameplay, scoring, the FL4 QR format and teacher scanner are unchanged. To upgrade from v2.4, replacing `index.html` alone is sufficient.
 
 ## What students see
 
 - Six shuffled questions per run, from log laws, function reconstruction, horizontal/vertical translations and dilations, with random numerical values and varying templates.
-- Interactive graph with a light mathematical grid. Touchscreen swipes **scroll the page by default**; tap **Explore graph** for one-finger drag and two-finger pinch zoom, then **Done · scroll page** to exit. Plus/minus and **Reset view** remain accessible. Mouse dragging works normally on desktop.
-- Minimum five active seconds to inspect each question, then a single tap to submit an answer. No second confirmation tap.
+- Interactive graph: one-finger drag, pinch zoom with two fingers, plus/minus zoom, **Reset view** to recenter, labelled coordinates and a light mathematical grid.
+- Minimum five active seconds to inspect each question and a two-tap answer lock to discourage accidental guessing.
 - Six-question Standard adaptive runs, worth up to **15** (1 then 2 then four 3-mark questions for a perfect route).
 - **Boss Run unlocked after 13/15 or better on a Standard run.** Under this exact progression a Standard score above 12 is 15/15. Boss Run uses six challenge-level questions worth three each, maximum **18/15**.
 - One shared 20-minute active-time budget across all runs; interruption pauses active time and is counted. The name, best score, short attempt history, and session state persist on the same device. The final submit button freezes results and displays a compact QR, printable PDF, and fallback text.
@@ -61,8 +53,8 @@ The app computes `percentage = round(min(best_mark, 15) * 100 / 15)`, then looks
 Why May 2025? It is a fully documented and cross-checkable complete 1–7 TZ3 table. May 2026 TZ3 *reported* boundary listings currently available to us include grades 3–7, but not a verified complete 1–7 grade range; the game therefore does not mix undocumented or estimated low-grade cutoffs with the 2026 reports.
 
 References:
-- May 2025 Math AA SL TZ3 subject report: https://sufferingrepo.me/IB%20SUBJECT%20REPORTS/Group%205%20-%20Mathematics/AASL/Maths%20AASL%20Subject%20Report%20M25%20TZ3.pdf
-- Session-by-session sourced boundary comparison: https://www.pietromeloni.com/ib-grade-boundaries/maths-aa-sl
+- [May 2025 Math AA SL TZ3 subject report](https://sufferingrepo.me/IB%20SUBJECT%20REPORTS/Group%205%20-%20Mathematics/AASL/Maths%20AASL%20Subject%20Report%20M25%20TZ3.pdf)
+- [Session-by-session sourced boundary comparison](https://www.pietromeloni.com/ib-grade-boundaries/maths-aa-sl)
 
 ## Teacher check-in and QR
 
@@ -80,10 +72,7 @@ Teacher mode accepts **FL4 and older Function Lab v3/v2** check-in records. In a
 
 ## Package
 
-`index.html` — full bundled student quiz (self-contained HTML/CSS/JS including a UTF-8-aware QR encoder)
-
-`teacher.html` — teacher webcam/screenshot/manual check-in, radar and trend, CSV and JSON exports
-
-`VERIFICATION.md` — QA record and caveats
-
-`LICENSES.md`, `APACHE-2.0.txt` — notices for bundled QR code library
+- [`index.html`](index.html) — full bundled student quiz (self-contained HTML/CSS/JS including a UTF-8-aware QR encoder)
+- [`teacher.html`](teacher.html) — teacher webcam/screenshot/manual check-in, radar and trend, CSV and JSON exports
+- [`VERIFICATION.md`](VERIFICATION.md) — QA record and caveats
+- [`LICENSES.md`](LICENSES.md), [`APACHE-2.0.txt`](APACHE-2.0.txt) — notices for bundled QR code library
