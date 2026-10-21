@@ -1371,11 +1371,38 @@ main{flex:1;min-width:0;padding:22px 15px 26px}.surface{background:var(--white);
 @media(max-width:430px){.grade-reveal{grid-template-columns:128px minmax(0,1fr);padding:12px 8px;gap:2px}.waxseal{width:134px}.grade-copy{padding-left:0}.grade-copy h2{font-size:19px}.grade-copy h2 b{font-size:25px}.grade-copy p{font-size:11px}.grade-copy .grade-disclaimer{font-size:9.5px}}
 @media(max-width:350px){.grade-reveal{grid-template-columns:112px minmax(0,1fr);padding:9px 7px}.waxseal{width:115px}.grade-copy h2{font-size:17px}.grade-copy h2 b{font-size:22px}}
 @media print {.grade-reveal{break-inside:avoid}}
+
+/* v2.5 — timer depletion + compact arcade hierarchy. */
+.timer-rail{height:5px;background:#d5e3df;width:100%;overflow:hidden;flex-shrink:0}
+.timer-rail i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#5ecac1,#14a58e);transition:width .45s linear,background .3s}
+.timer-rail.urgent i{background:linear-gradient(90deg,#e3a366,#d4563f)}
+@media(prefers-reduced-motion:reduce){.timer-rail i{transition:none}}
+/* Unlocked boss + replay are immediately visible. */
+.boss-gate{display:grid;grid-template-columns:55px 1fr;gap:9px 12px;align-items:center;padding:17px 14px;border-radius:18px;margin:3px 0 4px;border:1.5px solid #d5ccc7}
+.boss-gate.locked{background:linear-gradient(115deg,#f2f0ed,#fcf9f6);color:#675c61}
+.boss-gate.unlocked{background:radial-gradient(circle at 5% 5%,#b95b46 0%,#692b39 62%,#422737 100%);color:#fff0dc;border:1.5px solid #dca36f;box-shadow:0 8px 18px rgba(102,39,50,.22)}
+.boss-emblem{width:52px;height:52px;display:grid;place-items:center;border:2px solid currentColor;border-radius:15px;font-size:31px;transform:rotate(-8deg);opacity:.88}
+.boss-gate-copy b{display:block;font-size:15px;font-weight:950;letter-spacing:.06em;line-height:1.15}
+.boss-gate-copy small{display:block;font-size:12px;margin-top:5px;line-height:1.4;opacity:.85}
+.boss-gate .bossbtn{grid-column:1/-1;min-height:64px;font-size:17px;border:1px solid #ffcf9a;background:#fbe8c3;color:#6a2735;box-shadow:0 5px 0 rgba(31,12,20,.25)}
+.boss-gate .bossbtn:hover{background:#fff0d2;color:#61222f}
+.boss-progress{height:7px;background:#d7d5d3;border-radius:7px;overflow:hidden;margin:10px 4px 0 0}
+.boss-progress i{height:100%;background:linear-gradient(90deg,#ab513e,#d5a663);display:block;border-radius:7px}
+.run-control{margin:11px 0 22px;gap:12px}
+.run-control .replaybtn{background:linear-gradient(125deg,#164659,#117e75);min-height:74px;font-size:19px;display:flex;flex-direction:column;gap:1px;text-align:center;box-shadow:0 5px 0 rgba(12,63,65,.18)}
+.run-control .replaybtn span{font-size:12px;font-weight:600;opacity:.86}
+.run-control .submitbest{min-height:52px;background:#f4f9f6;color:#16554b}
+.run-news{text-align:center;font-size:11px;letter-spacing:.09em;font-weight:950;color:#197a6e;padding:4px 0 8px}
+.run-news b{font-size:15px;letter-spacing:0;margin-left:4px}
+.map-level{display:inline-block;background:#e4f3ee;color:#1a776c;border:1px solid #c9e6dd;border-radius:7px;padding:3px 6px;font:800 10px system-ui,sans-serif;vertical-align:middle;letter-spacing:.04em}
+@media(max-width:370px){.boss-gate{grid-template-columns:43px 1fr;padding:12px}.boss-emblem{width:42px;height:42px;font-size:25px}.boss-gate-copy b{font-size:13px}.run-control .replaybtn{font-size:17px}}
+@media(prefers-reduced-motion:no-preference){.boss-gate.unlocked .boss-emblem{animation:bossShine 2.6s ease-in-out infinite alternate}@keyframes bossShine{from{filter:brightness(.9);transform:rotate(-8deg) scale(.98)}to{filter:brightness(1.25);transform:rotate(-5deg) scale(1.04)}}}
 </style>
 </head>
 <body>
 <div class="app" id="app">
-<header class="mast"><div class="brand"><div class="mark" aria-hidden="true">ƒ</div><div>FUNCTION LAB<small>IB MATHS · AA SL</small></div></div><div class="top-actions"><span class="clock" id="clock" hidden aria-live="off">20:00</span><button class="iconbtn text" id="sheetBtn" type="button" aria-label="Open formula sheet">ƒx <span aria-hidden="true">↗</span></button></div></header>
+<header class="mast"><div class="brand"><div class="mark" aria-hidden="true">ƒ</div><div>FUNCTION LAB<small>IB MATHS · AA SL</small></div></div><div class="top-actions"><span class="clock" id="clock" hidden aria-live="off">15:00</span><button class="iconbtn text" id="sheetBtn" type="button" aria-label="Open formula sheet">ƒx <span aria-hidden="true">↗</span></button></div></header>
+<div id="timerRail" class="timer-rail" hidden aria-hidden="true"><i id="timerFill"></i></div>
 <main id="main" aria-live="polite"></main>
 <footer class="appfooter">No account · No uploads · Saved on this device</footer>
 </div>
@@ -1412,17 +1439,20 @@ const STORAGE='function-lab-aa-sl-session-v3';
 const NAME_STORAGE='function-lab-aa-sl-last-name-v3';
 const QUESTION_DWELL=5000; // Five active seconds per question, including time used to inspect graphs.
 const PREVIOUS='function-lab-previous-variants-v2';
-const DURATION=20*60*1000; // 20 minutes of active quiz time; away time is paused and recorded
+const DURATION=15*60*1000; // One shared fifteen-minute active-time budget across all runs
 const ROUNDS=6;
 const MAX_SCORE=15;
-// Full, documented Maths AA SL May 2025 Time Zone 3 overall IB boundaries (scaled /100):
-// 1:0-9; 2:10-20; 3:21-32; 4:33-47; 5:48-61; 6:62-76; 7:77-100.
-// These are used only for a classroom comparison, not an official predicted IB grade.
-const GRADE_STARTS=[0,10,21,33,48,62,77];
-const GRADE_SESSION='May 2025 · TZ3';
-function gradeFromScore(raw){const percentage=Math.round(100*Math.max(0,Math.min(MAX_SCORE,Number(raw)||0))/MAX_SCORE);
+// Classroom-adjusted Maths AA SL May 2025 TZ3 thresholds: add EIGHT PERCENTAGE
+// POINTS to each published grade-2-to-grade-7 floor; grade 1 still begins at 0.
+// Original grade floors: 0,10,21,33,48,62,77. Classroom floors: 0,18,29,41,56,70,85.
+// 7+ is a GAME achievement for a Boss score above 15/15, not an official IB grade.
+const GRADE_STARTS=[0,18,29,41,56,70,85];
+const GRADE_SESSION='May 2025 · TZ3 · +8pp';
+function gradeFromScore(raw){const score=Math.max(0,Number(raw)||0);if(score>MAX_SCORE)return '7+';
+ const percentage=Math.round(100*Math.min(MAX_SCORE,score)/MAX_SCORE);
  let grade=1;for(let i=1;i<GRADE_STARTS.length;i++)if(percentage>=GRADE_STARTS[i])grade=i+1;return grade;}
 function gradeFromBest(){return gradeFromScore(session?.best?.score||0);}
+function gradeLabel(){const g=gradeFromBest();return g==='7+'?'7+ (Boss bonus)':g+'/7';}
 // Sculpted vector wax emblem. Not the official IB seal or logo.
 function waxSealSVG(grade){
  const N=128,points=[];for(let i=0;i<N;i++){
@@ -1430,7 +1460,7 @@ function waxSealSVG(grade){
   points.push(`${(110+Math.cos(a)*r).toFixed(2)},${(110+Math.sin(a)*r).toFixed(2)}`);
  }
  const gid='waxTone',lid='waxLight',fid='waxInner';
- return `<svg class="waxseal" viewBox="0 0 220 220" role="img" aria-label="Estimated IB-style grade ${grade} out of seven, using May 2025 Time Zone 3 AA SL boundaries">
+ return `<svg class="waxseal" viewBox="0 0 220 220" role="img" aria-label="Estimated classroom grade ${grade}${grade==='7+'?' Boss achievement':' out of seven'} using adjusted May 2025 TZ3 thresholds">
  <defs>
  <radialGradient id="${gid}" cx="34%" cy="29%" r="82%"><stop offset="0" stop-color="#d57069"/><stop offset=".34" stop-color="#a93c43"/><stop offset=".75" stop-color="#862a36"/><stop offset="1" stop-color="#54202c"/></radialGradient>
  <linearGradient id="${lid}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff1d8" stop-opacity=".9"/><stop offset=".5" stop-color="#e8ad94" stop-opacity=".65"/><stop offset="1" stop-color="#fff8e2" stop-opacity=".5"/></linearGradient>
@@ -1443,18 +1473,18 @@ function waxSealSVG(grade){
  <circle cx="110" cy="110" r="59" fill="none" stroke="#e8b9a3" stroke-opacity=".65" stroke-width="1" stroke-dasharray="2 6"/>
  <g fill="#f1c6aa" opacity=".77"><circle cx="110" cy="52" r="2.3"/><circle cx="110" cy="168" r="2.3"/><circle cx="52" cy="110" r="2.3"/><circle cx="168" cy="110" r="2.3"/></g>
  <text x="110" y="67" text-anchor="middle" fill="#f7d8bf" letter-spacing="4.2" font-family="Georgia,serif" font-size="12" font-weight="bold">GRADE</text>
- <text x="111.5" y="144" text-anchor="middle" fill="#5d1b27" opacity=".55" font-family="Georgia,serif" font-size="91" font-weight="bold">${grade}</text>
- <text x="110" y="141" text-anchor="middle" fill="#f8e6cf" font-family="Georgia,serif" font-size="91" font-weight="bold">${grade}</text>
+ <text x="111.5" y="144" text-anchor="middle" fill="#5d1b27" opacity=".55" font-family="Georgia,serif" font-size="${grade==='7+'?'69':'91'}" font-weight="bold">${grade}</text>
+ <text x="110" y="141" text-anchor="middle" fill="#f8e6cf" font-family="Georgia,serif" font-size="${grade==='7+'?'69':'91'}" font-weight="bold">${grade}</text>
  <path d="M79 157 Q110 170 141 157" fill="none" stroke="#f5bf9d" stroke-width="1.6" opacity=".8"/>
  <text x="110" y="183" text-anchor="middle" fill="#f3d0b4" font-family="Georgia,serif" font-weight="bold" letter-spacing="3.2" font-size="11">TZ · 3</text>
  </svg>`;
 }
-function gradeDisplay(){const g=gradeFromBest(),pct=Math.min(100,Math.round(100*calculateScore()/MAX_SCORE));
- return `<section class="grade-reveal" aria-label="Estimated IB-equivalent classroom grade">
+function gradeDisplay(){const g=gradeFromBest(),pct=Math.round(100*calculateScore()/MAX_SCORE);
+ return `<section class="grade-reveal" aria-label="Adjusted IB-style classroom grade">
    <div class="seal-frame">${waxSealSVG(g)}</div>
-   <div class="grade-copy"><span class="eyebrow">IB-style benchmark</span><h2>Estimated Grade <b>${g}</b><small> / 7</small></h2>
-   <p>Based on your best <b>${calculateScore()}/${MAX_SCORE}</b> (${pct}%${calculateScore()>MAX_SCORE?" after excluding Boss bonus marks":""}) using the <b>${GRADE_SESSION}</b> Mathematics AA SL overall boundaries.</p>
-   <p class="grade-disclaimer">Classroom benchmark only—not a predicted or officially awarded IB grade. Boss marks above 15 do not raise the grade past 7.</p></div>
+   <div class="grade-copy"><span class="eyebrow">CLASSROOM GRADE</span><h2>${g==='7+'?'Boss badge':'IB-style'} <b>${g}</b>${g==='7+'?'':'<small> / 7</small>'}</h2>
+   <p><b>${calculateScore()}/${MAX_SCORE}</b> · ${pct}%</p>
+   <p class="grade-disclaimer">${g==='7+'?'7+ = Boss achievement, not an IB grade.':'M25 TZ3 · +8 percentage points · unofficial'}</p></div>
  </section>`;}
 
 const TOPICS=['log','reconstruct','shiftH','shiftV','scaleH','scaleV'];
@@ -1837,8 +1867,12 @@ function sessionOpen(){return !!(session&&!session.finishedAt);}
 function paintPause(){const p=$('pausedOverlay');p.hidden=!sessionOpen()||!session?.pausedAt;}
 function beginPause(reason){if(!sessionOpen()||session.pausedAt)return;session.pausedAt=Date.now();session.focusLosses=(session.focusLosses||0)+1;session.pauseReason=reason;saveSession();paintPause();startClock();}
 function resumeQuiz(){if(!sessionOpen()||!session.pausedAt)return;if(document.hidden)return;session.pausedMs=(session.pausedMs||0)+(Date.now()-session.pausedAt);session.pausedAt=null;saveSession();paintPause();startClock();updateLockButton();}
-function startClock(){clearInterval(timer);if(!session||session.finishedAt){clock.hidden=true;return;}clock.hidden=false;
- const tick=()=>{const ms=DURATION-activeElapsed();clock.textContent=session.pausedAt?'PAUSED':formatTime(ms);clock.classList.toggle('urgent',ms<120000&&!session.pausedAt);if(ms<=0&&!session.pausedAt&&!session.finishedAt)finish(true);};
+function startClock(){clearInterval(timer);if(!session||session.finishedAt){clock.hidden=true;$('timerRail').hidden=true;return;}
+ clock.hidden=false;$('timerRail').hidden=false;
+ const tick=()=>{const ms=DURATION-activeElapsed();clock.textContent=session.pausedAt?'PAUSED':formatTime(ms);
+ $('timerFill').style.width=(Math.max(0,Math.min(100,ms/DURATION*100))).toFixed(2)+'%';
+ $('timerRail').classList.toggle('urgent',ms<120000&&!session.pausedAt);
+ clock.classList.toggle('urgent',ms<120000&&!session.pausedAt);if(ms<=0&&!session.pausedAt&&!session.finishedAt)finish(true);};
  tick();timer=setInterval(tick,500);paintPause();}
 function runScore(answers){return answers.reduce((sum,a)=>sum+a.points,0);}
 function runPattern(answers){return TOPICS.map(t=>{const a=answers.find(x=>x.topic===t);return a?String(a.level+(a.correct?3:0)):'-';}).join('');}
@@ -1870,7 +1904,8 @@ function finish(timedOut=false){
  if(!session||session.finishedAt)return;
  if(session.phase==='running')finishRun();
  if(session.pausedAt){session.pausedMs=(session.pausedMs||0)+(Date.now()-session.pausedAt);session.pausedAt=null;}
- session.finishedAt=Date.now();session.timedOut=!!timedOut;session.activeMs=activeElapsed();session.phase='submitted';
+ session.finishedAt=Date.now();session.timedOut=!!timedOut;session.activeMs=Math.min(DURATION,activeElapsed());session.phase='submitted';
+ $('sheetOverlay').hidden=true; // A formula-sheet modal must never conceal automatic time-out results.
  saveSession();paintPause();renderResult();
 }
 function updateLockButton(){
@@ -1881,12 +1916,12 @@ function updateLockButton(){
  const note=$('lockNote');if(note){note.textContent=remain?`Use the graph and formula sheet if helpful. You can submit your answer in ${remain}s.`:'One tap submits your answer. You cannot change it afterwards.';note.classList.toggle('ready',!remain);}
 }
 function setView(html){main.innerHTML=html;window.scrollTo({top:0,behavior:'auto'});}
-function renderWelcome(){question=null;clock.hidden=true;clearInterval(timer);clearInterval(lockTimer);setView(`
-<div class="surface"><div class="hero"><div class="eyebrow">Functions · Transformations · Log laws</div><h1>Think in<br>functions.</h1><p>Twenty active minutes. Play six-question runs, improve your personal best, and choose when to submit it. A score of 13/15 unlocks the six-question Boss Run worth up to 18/15.</p>
+function renderWelcome(){question=null;clock.hidden=true;$('timerRail').hidden=true;clearInterval(timer);clearInterval(lockTimer);setView(`
+<div class="surface"><div class="hero"><div class="eyebrow">FUNCTION LAB · 15-MIN CHALLENGE</div><h1>Think in<br>functions.</h1><p>Six questions per run. Chase your high score. Earn <b>15/15</b> to unlock the <b>Boss Run</b>.</p>
 <div class="hero-art" aria-hidden="true"><svg viewBox="0 0 440 108" preserveAspectRatio="none"><path class="curve-one" d="M2 96 L149 14 L239 -40"/><path class="curve-two" d="M170 101 C205 104 223 97 244 84 C267 70 272 21 310 11 C346 3 400 4 445 4"/><circle class="dot" cx="245" cy="84" r="6"/><circle class="dot" cx="310" cy="11" r="6"/></svg></div></div>
-<div class="pad"><div class="stats"><div class="stat"><strong>06</strong><span>Per run</span></div><div class="stat"><strong>20</strong><span>Active minutes</span></div><div class="stat"><strong>18</strong><span>Boss maximum</span></div></div>
+<div class="pad"><div class="stats"><div class="stat"><strong>06</strong><span>Per run</span></div><div class="stat"><strong>15</strong><span>Total minutes</span></div><div class="stat"><strong>18</strong><span>Boss maximum</span></div></div>
 <form id="startForm"><label class="fieldlabel" for="studentName">Your name (saved for every run)</label><input class="textinput" id="studentName" name="name" maxlength="32" autocomplete="name" enterkeyhint="go" placeholder="First and last name" required><div class="error" id="startError" role="alert"></div><button class="primary" type="submit">Begin first run <span aria-hidden="true">→</span></button></form>
-<p class="smallprint">Only your highest run will count when you submit. During a question, review each question before submitting your answer with one tap. Switching tabs pauses this active-time clock and is recorded. Your results and attempt trend are visible after each run; the final QR is generated when you submit.</p>
+<p class="smallprint">One 15-minute active-time clock for every run. Best score counts; time-out submits automatically. Switching apps pauses and is logged.</p>
 </div></div>`);
  try{$('studentName').value=localStorage.getItem(NAME_STORAGE)||'';}catch(e){}
  $('startForm').addEventListener('submit',ev=>{
@@ -1913,7 +1948,7 @@ function renderQuestion(){
  let answerPart='';
  if(question.type==='mc')answerPart=`<div class="choices" role="radiogroup" aria-label="Choose an answer">${question.options.map((opt,i)=>`<button class="choice" type="button" data-choice="${i}" role="radio" aria-checked="false"><span class="ring"></span><span>${opt.html}</span></button>`).join('')}</div>`;
  else answerPart=`<div class="inputs ${question.fields.length===2?'two':question.fields.length===3?'three':''}">${question.fields.map(f=>`<div><label class="fieldlabel" for="in_${esc(f.id)}">${esc(f.label)}</label><input class="textinput numeric-input" id="in_${esc(f.id)}" data-field="${esc(f.id)}" type="text" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="?" aria-label="${esc(f.label)}" maxlength="14"></div>`).join('')}</div><p class="number-tip">You can enter a whole number, decimal or fraction (for example, 1/2). Include the minus sign when needed.</p>`;
- setView(`<div class="run-strip"><span>Run ${session.history.length+1} · ${session.mode==='boss'?'Boss challenge':'Standard climb'}</span><span class="run-badge ${session.mode==='boss'?'boss':''}">${session.mode==='boss'?'BOSS · 3 MARKS EACH':'ADAPTIVE'}</span></div><div class="progressline"><span class="stage">Question ${session.index+1} of ${ROUNDS}</span><div class="steps" aria-label="${session.index} of ${ROUNDS} completed">${steps}</div></div><article class="surface"><div class="question-head"><span class="topic">${question.category}</span><h2>${question.prompt}</h2><p>${question.desc}</p>${equation}</div>${graphPart}<div class="answer-area"><div class="answer-label">Your answer</div>${answerPart}<div class="error" id="answerError" role="alert"></div><div class="submit-space"><button class="primary" id="submitAnswer" type="button" disabled>Inspect question · 5s</button></div><p class="lock-note" id="lockNote" aria-live="polite">Take a moment to reason through your answer before locking it.</p><p class="no-feedback">No correctness feedback during the run. You'll see marks and progress after all six questions.</p></div></article>`);
+ setView(`<div class="run-strip"><span>Run ${session.history.length+1} · ${session.mode==='boss'?'Boss challenge':'Standard climb'}</span><span class="run-badge ${session.mode==='boss'?'boss':''}">${session.mode==='boss'?'BOSS · 3 MARKS EACH':'ADAPTIVE'}</span></div><div class="progressline"><span class="stage">Question ${session.index+1} of ${ROUNDS}</span><div class="steps" aria-label="${session.index} of ${ROUNDS} completed">${steps}</div></div><article class="surface"><div class="question-head"><span class="topic">${question.category}</span><h2>${question.prompt}</h2><p>${question.desc}</p>${equation}</div>${graphPart}<div class="answer-area"><div class="answer-label">Your answer</div>${answerPart}<div class="error" id="answerError" role="alert"></div><div class="submit-space"><button class="primary" id="submitAnswer" type="button" disabled>Inspect question · 5s</button></div><p class="lock-note" id="lockNote" aria-live="polite">Take a moment to reason through your answer before locking it.</p><p class="no-feedback">Score and skill map appear after the run.</p></div></article>`);
  if(question.type==='mc'){
   main.querySelectorAll('[data-choice]').forEach(el=>el.addEventListener('click',()=>{
    selected=Number(el.dataset.choice);main.querySelectorAll('[data-choice]').forEach(b=>{const on=Number(b.dataset.choice)===selected;b.classList.toggle('selected',on);b.setAttribute('aria-checked',String(on));b.querySelector('.ring').textContent=on?'✓':'';});$('answerError').textContent='';updateLockButton();
@@ -2068,16 +2103,25 @@ function checkCode(s){let h=2166136261;for(const b of new TextEncoder().encode(s
 function studentId(){return ((session.sessionSeed??session.seed)>>>0).toString(36).padStart(7,'0');}
 function skillTotals(answers=bestAnswers()){const cats=[['Log',['log']],['Fun',['reconstruct']],['Trans',['shiftH','shiftV']],['Dil',['scaleH','scaleV']]];
  return cats.map(([label,ids])=>{const a=answers.filter(x=>ids.includes(x.topic));return `${label}${a.reduce((s,x)=>s+x.points,0)}/${a.reduce((s,x)=>s+x.possible,0)}`;}).join(' ');}
+// Aggregate evidence across EVERY answered question in EVERY recorded run.
+// History contains one six-character pattern per run. Each character encodes
+// its adaptive difficulty and whether it was answered correctly; this supports
+// exact reconstruction without retaining every past question in the QR.
 function studentSkillStats(){const cats=[
  {name:'Logarithm laws',short:'Logs',ids:['log']},
  {name:'Function families',short:'Functions',ids:['reconstruct']},
  {name:'Translations',short:'Translations',ids:['shiftH','shiftV']},
  {name:'Dilations',short:'Dilations',ids:['scaleH','scaleV']}
- ];return cats.map(cat=>{
-  const a=bestAnswers().filter(x=>cat.ids.includes(x.topic));
-  const earned=a.reduce((n,x)=>n+x.points,0),possible=a.reduce((n,x)=>n+x.possible,0);
-  return {...cat,earned,possible,attempted:a.length,pct:possible?100*earned/possible:null};
- });}
+ ];
+ const byTopic={};for(const topic of TOPICS)byTopic[topic]={earned:0,possible:0,attempted:0};
+ for(const run of session?.history||[]){for(let i=0;i<TOPICS.length;i++){
+   const char=String(run.pattern||'')[i];if(!/^[0-5]$/.test(char||''))continue;
+   const val=Number(char),possible=(val%3)+1,earned=val>=3?possible:0;
+   const bucket=byTopic[TOPICS[i]];bucket.earned+=earned;bucket.possible+=possible;bucket.attempted++;
+ }}
+ return cats.map(cat=>{const entries=cat.ids.map(id=>byTopic[id]),earned=entries.reduce((n,x)=>n+x.earned,0),possible=entries.reduce((n,x)=>n+x.possible,0),attempted=entries.reduce((n,x)=>n+x.attempted,0);
+  return {...cat,earned,possible,attempted,pct:possible?100*earned/possible:null};});
+}
 function attemptTrendSVG(history){
  const values=history.map(h=>h.score),W=338,H=126,left=26,right=12,top=16,bottom=23;
  const x=i=>left+(values.length===1?(W-left-right)/2:(i*(W-left-right)/(values.length-1)));
@@ -2104,11 +2148,11 @@ function studentRadarSVG(stats){
  const dots=points.map(([x,y],i)=>stats[i].pct===null?'':`<circle class="radar-vertex" cx="${x}" cy="${y}" r="4"/>`).join('');
  const labels=angles.map((a,i)=>{const [x,y]=at(a,r+29);return `<text x="${x}" y="${y}" dominant-baseline="middle" text-anchor="middle">${esc(stats[i].short)}</text>`;}).join('');
  return `<svg id="studentRadar" class="student-radar" viewBox="0 0 360 298" role="img" aria-labelledby="studentRadarTitle studentRadarDesc">
-  <title id="studentRadarTitle">Skills radar for this quiz</title><desc id="studentRadarDesc">Marks earned divided by marks available for logarithms, functions, translations and dilations. See the exact values below the chart.</desc>
+  <title id="studentRadarTitle">Cumulative skills radar</title><desc id="studentRadarDesc">Weighted marks earned divided by all marks offered across every run, for logarithms, functions, translations and dilations.</desc>
   ${grid}${axes}<polygon class="radar-area" points="${polygon}"/>${dots}${labels}</svg>`;
 }
 function studentSkillsMarkup(stats){
- const cards=stats.map(s=>`<div class="student-skill"><b>${esc(s.name)}</b><small>${s.possible?`${s.earned} / ${s.possible} marks (${Math.round(s.pct)}%)`:'Not assessed'}</small><div class="track"><i style="width:${s.pct||0}%"></i></div></div>`).join('');
+ const cards=stats.map(s=>`<div class="student-skill"><b>${esc(s.name)}</b><small>${s.possible?`${s.earned}/${s.possible} marks · ${s.attempted} questions · ${Math.round(s.pct)}%`:'Not assessed'}</small><div class="track"><i style="width:${s.pct||0}%"></i></div></div>`).join('');
  const rated=stats.filter(s=>s.possible>0);
  let insight='The questions you answered provide a starting point for review.';
  if(rated.length){
@@ -2116,13 +2160,12 @@ function studentSkillsMarkup(stats){
   const low=[...rated].sort((a,b)=>a.pct-b.pct)[0];
   if(rated.length===1)insight=`Only ${esc(rated[0].name)} was assessed.`;
   else if(high.pct===low.pct)insight=high.pct===100?'Full marks in all assessed categories.':high.pct===0?'No marks earned yet; revise all assessed categories.':'Similar performance across the assessed categories.';
-  else insight=`Strongest in this attempt: <b>${esc(high.name)}</b>. Practice next: <b>${esc(low.name)}</b>.`;
+  else insight=`Strongest so far: <b>${esc(high.name)}</b>. Practice next: <b>${esc(low.name)}</b>.`;
  }
- return `<section class="skills-panel" aria-label="Your skills snapshot"><h2>Your skills snapshot</h2>
-  <p class="summary">Proportion of available marks earned in each topic</p>
+ return `<section class="skills-panel" aria-label="Your adaptive skills map"><h2>Skill map <span class="map-level">LVL ${session.history.length}</span></h2>
+  <p class="summary">All runs · ${stats.reduce((n,x)=>n+x.attempted,0)} questions seen · difficulty-weighted marks</p>
   ${studentRadarSVG(stats)}<div class="student-skill-list">${cards}</div>
   <div class="result-insight">${insight}</div>
-  <p class="tinyhint">This is a six-question snapshot. Some areas use only one question, and difficulty affects the number of marks available.</p>
  </section>`;
 }
 function reviewFlags(){const b=session.clipboard||{},flags=[];
@@ -2137,11 +2180,12 @@ function qrPayload(){
  // The best run retains category evidence; previous runs are a short trend + first-run pattern.
  const b=session.clipboard||{},best=session.best,h=session.history||[],trend=h.slice(-12).map(a=>a.score).join(',');
  const marks=skillTotals().replace('Log','L').replace('Fun','F').replace('Trans','T').replace('Dil','D');
+ const all=studentSkillStats().map(x=>`${x.earned}/${x.possible}`).join(',');
  const source=[
- 'FL4',`Name: ${session.name}`,
+ 'FL5',`Name: ${session.name}`,
  `Score: ${best?.score||0}/15; ${best?.mode==='boss'?'Boss':'Standard'}; ${best?.correct||0}/${best?.attempted||0}`,
  `Runs: ${h.length}; Best: ${best?.attemptNo||0}; ${trend||'0'}`,
- `Skills: ${marks}`,
+ `Skills: ${marks}`,`All: ${all}`,
  `First: ${h[0]?.pattern||'------'}; Q: ${skillPattern()}`,
  `Focus: ${session.focusLosses||0}; Pause: ${Math.floor((session.pausedMs||0)/1000)}s; Active: ${Math.round((session.activeMs??activeElapsed())/1000)}s`,
  `Copy: ${b.copy||0} Paste: ${b.paste||0} Cut: ${b.cut||0} Menu: ${b.menu||0} Reload: ${session.reloads||0}`,
@@ -2151,22 +2195,27 @@ function qrPayload(){
 
 function resetForAnotherStudent(){
  if(!session?.finishedAt)return;
- if(!confirm('Begin a completely new 20-minute session on this device? The submitted result is already saved in the teacher QR/PDF, but will no longer be shown here.'))return;
+ if(!confirm('Begin a completely new 15-minute session on this device? The submitted result is already saved in the teacher QR/PDF, but will no longer be shown here.'))return;
  session=null;try{localStorage.removeItem(STORAGE);}catch(e){}renderWelcome();
 }
 function renderResult(){
  if(!session){renderWelcome();return;}
+ if(!session.finishedAt&&isExpired()){finish(true);return;}
  question=null;clearInterval(timer);clearInterval(lockTimer);qrMatrix=null;
  const submitted=!!session.finishedAt,h=session.history||[],latest=h[h.length-1],best=session.best;
+ if(submitted){clock.hidden=true;$('timerRail').hidden=true;}
  const stats=studentSkillStats(),canRetry=!submitted&&!isExpired();
  const overview=`<div class="results-overview"><div class="metric-result"><span>Your personal best</span><strong id="studentScore">${calculateScore()}<small> / ${MAX_SCORE}</small></strong></div><div class="metric-result"><span>Completed runs</span><strong>${h.length}<small> total</small></strong></div></div>`;
- const latestNote=latest?`<p class="progress-note">${latest.mode==='boss'?'Boss Run':'Standard run'} #${h.length}: <b>${latest.score} marks</b> · ${latest.correct}/${latest.attempted} correct. ${best?.attemptNo===h.length?'New personal best.':'Your higher score is still saved.'}</p>`:'<p class="progress-note">No questions were completed; your teacher can still check in your session.</p>';
- const playButtons=canRetry?`<div class="run-control" aria-label="Choose your next action"><button class="primary" id="retryStandard" type="button">↻ Play another Standard run</button>${session.bossUnlocked?`<button class="primary bossbtn" id="retryBoss" type="button">⚑ Boss Run unlocked · 18/15 possible</button>`:`<p class="progress-note">Earn at least 13/15 in Standard mode to unlock Boss Run: six hard questions at 3 marks each.</p>`}<button class="secondary submitbest" id="finalSubmit" type="button">Submit my best · show teacher QR</button></div>`:'';
+ const latestNote=latest?`<div class="run-news">${best?.attemptNo===h.length?'✦ NEW HIGH SCORE':'↻ RUN '+h.length} <b>${latest.score}/15</b> ${latest.mode==='boss'?'· BOSS':''}</div>`:'';
+ const bossGate= session.bossUnlocked?
+  `<section class="boss-gate unlocked" aria-label="Boss Run unlocked"><div class="boss-emblem" aria-hidden="true">✦</div><div class="boss-gate-copy"><b>BOSS RUN UNLOCKED</b><small>6 hard questions · up to 18/15</small></div><button class="primary bossbtn" id="retryBoss" type="button">ENTER BOSS RUN →</button></section>`:
+  `<section class="boss-gate locked" aria-label="Boss Run locked"><div class="boss-emblem" aria-hidden="true">◆</div><div class="boss-gate-copy"><b>BOSS RUN · LOCKED</b><small>Reach 15/15 to unlock</small><div class="boss-progress"><i style="width:${Math.min(100,100*calculateScore()/15)}%"></i></div></div></section>`;
+ const playButtons=canRetry?`<div class="run-control" aria-label="Choose your next action">${bossGate}<button class="primary replaybtn" id="retryStandard" type="button">↻ PLAY AGAIN <span>Standard · 6 questions</span></button><button class="secondary submitbest" id="finalSubmit" type="button">Finish &amp; show QR →</button></div>`:'';
  setView(`<article class="surface"><div class="result-wrap"><div class="resulttitle">
- <div class="eyebrow">${submitted?(session.timedOut?'Time complete · automatic check-in':'Best score submitted'):'Run complete · keep climbing'}</div>
- <h1>${submitted?'Final results':'Run complete'}</h1><p>${esc(session.name)}, ${submitted?'this is your best score across all runs.':'your personal best is saved. Retry while time remains, or submit whenever you are ready.'}</p></div>
- ${overview}${gradeDisplay()}${best?.mode==='boss'?'<div style="text-align:center"><span class="finish-tag">Boss bonus included · up to 18/15</span></div>':''}
- ${latestNote}
+ <div class="eyebrow">${submitted?(session.timedOut?'TIME UP · AUTO-SUBMITTED':'SUBMITTED'):'RUN CLEARED · KEEP CLIMBING'}</div>
+ <h1>${submitted?'Session complete':'Run complete'}</h1><p>${esc(session.name)} · ${submitted?'your high score is locked in':'your best mark counts'}</p></div>
+ ${overview}${gradeDisplay()}${best?.mode==='boss'?'<div style="text-align:center"><span class="finish-tag">BOSS BONUS · 18/15 POSSIBLE</span></div>':''}
+ ${latestNote}${playButtons}
  ${best?studentSkillsMarkup(stats):''}
  ${attemptTrendMarkup()}
  ${submitted?`<a class="verify-jump" href="#qrVerify">Teacher verification QR ↓</a>
@@ -2182,7 +2231,7 @@ function renderResult(){
  <button class="secondary" id="printResult" type="button">Print / Save PDF</button></div>
  <p class="tinyhint">The QR is a client-recorded consistency record, not a cryptographic authentication. Your teacher can scan it to compare the best score and session indicators.</p>
  <button class="restart" id="newStudent" type="button">New student / new session on this device</button>`:
- `${playButtons}<p class="tinyhint">${formatTime(DURATION-activeElapsed())} of active time remains. The clock continues between runs. Focus interruptions and clipboard attempts are recorded across the full session.</p>`}
+ `<p class="tinyhint">${formatTime(DURATION-activeElapsed())} left · one shared timer for every run</p>`}
  </div></article>`);
  if(submitted){
   try{qrMatrix=makeQR(qrPayload());paintQR($('resultQR'),qrMatrix,4);}catch(err){console.error(err);$('resultQR').hidden=true;showToast('QR unavailable. Copy the full result text or save the PDF.');}
@@ -2221,7 +2270,7 @@ function printableSummary(){
  return {datetime,rows};
 }
 function fillPrint(){if(!session||!session.finishedAt)return;const{datetime,rows}=printableSummary();const qr=$('resultQR');
- $('printable').innerHTML=`<h1>Function Lab · AA SL</h1><div class="print-meta"><b>Name:</b> ${esc(session.name)}<br><b>Best score:</b> ${calculateScore()}/${MAX_SCORE} (${countCorrect()} correct of ${bestAnswers().length}); ${session.history.length} runs<br><b>Estimated IB-style grade:</b> ${gradeFromBest()}/7 (May 2025 TZ3 AA SL overall boundaries; capped at 15/15)<br><b>Skills:</b> ${esc(skillTotals())}<br><b>Finished:</b> ${esc(datetime)}<br><b>Submission ID:</b> ${studentId().toUpperCase()}</div><img src="${qr&&!qr.hidden?qr.toDataURL('image/png'):''}" alt="Private result QR code"><h2>Your submitted answers</h2>${rows}<p style="font-size:9pt;color:#555">The check-in QR contains your result plus client-recorded session evidence. It is not a cryptographic signature.</p>`;
+ $('printable').innerHTML=`<h1>Function Lab · AA SL</h1><div class="print-meta"><b>Name:</b> ${esc(session.name)}<br><b>Best score:</b> ${calculateScore()}/${MAX_SCORE} (${countCorrect()} correct of ${bestAnswers().length}); ${session.history.length} runs<br><b>Classroom grade:</b> ${esc(gradeLabel())} (May 2025 TZ3 with +8 percentage points)<br><b>Skill map (all runs):</b> ${esc(studentSkillStats().map(x=>`${x.short} ${x.earned}/${x.possible}`).join(' · '))}<br><b>Finished:</b> ${esc(datetime)}<br><b>Submission ID:</b> ${studentId().toUpperCase()}</div><img src="${qr&&!qr.hidden?qr.toDataURL('image/png'):''}" alt="Private result QR code"><h2>Your submitted answers</h2>${rows}<p style="font-size:9pt;color:#555">The check-in QR contains your result plus client-recorded session evidence. It is not a cryptographic signature.</p>`;
 }
 function saveQRCard(){
  if(!qrMatrix){showToast('QR unavailable. Copy the result text instead.');return;}
@@ -2232,7 +2281,7 @@ function saveQRCard(){
  const qr=document.createElement('canvas');qr.width=qr.height=650;paintQR(qr,qrMatrix,4);
  c.drawImage(qr,95,142,650,650);
  c.fillStyle='#193449';c.font='bold 29px system-ui,sans-serif';c.fillText(session.name,420,851);
- c.font='bold 46px system-ui,sans-serif';c.fillText(`BEST ${calculateScore()} / ${MAX_SCORE}  -  GRADE ${gradeFromBest()}`,420,917);
+ c.font='bold 43px system-ui,sans-serif';c.fillText(`BEST ${calculateScore()} / ${MAX_SCORE}  -  GRADE ${gradeFromBest()}`,420,917);
  c.font='20px system-ui,sans-serif';c.fillStyle='#617580';c.fillText(`Submission ${studentId().toUpperCase()} - Teacher check-in`,420,972);
  cv.toBlob(blob=>{if(blob)downloadBlob(blob,`function-lab-${safeFileName(session.name)}.png`);else showToast('Use a screenshot of your visible QR code instead.');},'image/png');
 }
@@ -2255,9 +2304,9 @@ function makeReportPDF(){
  function pdfCircle(cx,cy,r){const k=.552284749831;const u=r*k;put(`${(cx+r).toFixed(2)} ${cy} m ${cx+r} ${cy+u} ${cx+u} ${cy+r} ${cx} ${cy+r} c ${cx-u} ${cy+r} ${cx-r} ${cy+u} ${cx-r} ${cy} c ${cx-r} ${cy-u} ${cx-u} ${cy-r} ${cx} ${cy-r} c ${cx+u} ${cy-r} ${cx+r} ${cy-u} ${cx+r} ${cy} c f\n`);}
  put('0.52 0.16 0.21 rg\n');pdfCircle(326,735,31);
  put('0.89 0.66 0.55 RG 1.3 w\n');pdfCircle(326,735,25);
- text(313,725,String(gradeFromBest()),30,'0.98 0.88 0.75');
- text(45,661,`Skills: ${skillTotals()}`,9);
- text(45,647,`Estimated IB-style grade: ${gradeFromBest()}/7 (May 2025 TZ3; capped at 15/15)`,9,'0.48 0.20 0.24');
+ text(gradeFromBest()==='7+'?305:313,725,String(gradeFromBest()),gradeFromBest()==='7+'?24:30,'0.98 0.88 0.75');
+ text(45,661,`All-run skills: ${studentSkillStats().map(x=>`${x.short} ${x.earned}/${x.possible}`).join('  ')}`,9);
+ text(45,647,`Classroom grade: ${gradeLabel()} (M25 TZ3 +8 percentage points)`,9,'0.48 0.20 0.24');
  text(45,624,`Submission ${studentId().toUpperCase()}   Best answers ${bestAnswers().length} of ${ROUNDS}`,10);
  text(45,602,`Finished: ${new Date(session.finishedAt).toLocaleString('en-GB')}`,10);
  text(45,580,session.timedOut?'Session timer reached zero.':'Student chose to submit the personal best.',10);
