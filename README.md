@@ -6,7 +6,7 @@ Mobile-first six-question adaptive mathematics game with one **20-minute active-
 
 1. Upload **all the files in this folder** (especially `index.html` and `teacher.html`) to the root of your GitHub Pages repository. If replacing v2.3, replace **both** HTML files, because the QR payload is now the shorter `FL4` format.
 2. GitHub repo → Settings → Pages → Deploy from a branch → main / (root). Wait until the GitHub Pages URL is live.
-3. Share your site root (`https://USERNAME.github.io/REPOSITORY/`) with students.
+3. Share your site root (`https://rktrobinhood.github.io/math-materials/`) with students.
 4. Open `https://USERNAME.github.io/REPOSITORY/teacher.html` on your computer. Select **Check scanner setup**, allow webcam access, and scan one test submission. If scanning fails, use a screenshot or paste the plain-text QR record.
 5. **Export the teacher CSV or backup JSON before closing/clearing the browser data.** Scores are stored locally in the teacher browser, not on a server.
 
